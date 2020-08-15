@@ -1,4 +1,7 @@
 // Requiring necessary npm packages
+
+const dotenv = require('dotenv').config();
+
 const express = require("express");
 // Creating express app and configuring middleware needed for authentication
 const app = express();

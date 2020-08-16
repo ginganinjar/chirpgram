@@ -18,7 +18,8 @@ $(() => {
   let $currentInput = $usernameInput.focus();
 
   const socket = io();
-
+ 
+  
 
     // get the user details of the user
   $.getJSON("api/user_data", function(data) {
@@ -30,7 +31,8 @@ $(() => {
     console.log($currentInput);
 
     console.log("Adding user to server");
-    socket.emit("add user", username);
+    userID = socket.id;
+    socket.emit("add user", username, userID);
     connected = true;
   });
 
@@ -271,7 +273,8 @@ $(() => {
     connection = true;
 
     if (username) {
-      socket.emit("add user", username);
+      userID = socket.id;
+      socket.emit("add user", username, userID);
     }
   });
 

@@ -49,7 +49,6 @@ var numUsers = 0;
 onlineUsers = [];
 
 io.on('connection', (socket) => {
-  
 
   // when the client emits 'add user', this listens and executes
   socket.on('add user', (username, socketID) => {
@@ -57,8 +56,6 @@ io.on('connection', (socket) => {
     // we add the user to a globalvariable of online users.
     onlineUsers.push([username, socketID]);
     console.log(onlineUsers);
-    
-    
 
     // we store the username in the socket session for this client
     socket.username = username;

@@ -1,1 +1,2 @@
-
+DROP DATABASE IF EXISTS ChatApplication;
+CREATE DATABASE ChatApplication;

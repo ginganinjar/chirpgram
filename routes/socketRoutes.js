@@ -61,6 +61,13 @@ module.exports = function(io) {
         }
     });
     });
+
+    socket.on("getMsg", data => {
+        console.log("recieved getMSG file");
+        console.log(data);
+        socket.broadcast.to(data.toid).emit("recievedMessage", {
+          msg: data.msg,
+          name: data.name
+        });
+      });
 };
-
-

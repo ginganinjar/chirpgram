@@ -10,17 +10,17 @@ $(() => {
 
   const $loginPage = $(".login.page"); // The login page
   const $chatPage = $(".chat.page"); // The chatroom page
-  var username;
+  let username;
 
-  var connected = false;
+  let connected = false;
   let typing = false;
   let lastTypingTime;
   let $currentInput = $usernameInput.focus();
 
   const socket = io();
 
-    // get the user details of the user
-  $.getJSON("api/user_data", function(data) {
+  // get the user details of the user
+  $.getJSON("api/user_data", data => {
     username = data.username;
     console.log("the username is : " + username);
     $chatPage.show();
@@ -33,9 +33,23 @@ $(() => {
     socket.emit("add user", username, userID);
     connected = true;
   });
- 
+
+  $("#sendMSG").on("click", () => {
+    const sendtothis = prompt("inser sendto address :");
+
+    socket.emit("getMsg", {
+      toid: sendtothis,
+      msg: "test",
+      name: "dave"
+    });
+  });
+
+  socket.on("recievedMessage", data => {
+   alert("recieved message");
+   
+  });
+
   // Prompt for setting a username
- 
 
   const addParticipantsMessage = data => {
     let message = "";
@@ -54,10 +68,9 @@ $(() => {
 
     // Prevent markup from being injected into the message
     message = cleanInput(message);
-    
+
     // check connection state and message contents
     if (message && connected) {
-     
       $inputMessage.val("");
       addChatMessage({
         username: username,
@@ -88,12 +101,11 @@ $(() => {
 
     const $usernameDiv = $("<span class=\"username\"/>")
       .text(data.username)
-      .css("color","red");
+      .css("color", "red");
 
     const $messageBodyDiv = $("<span class=\"messageBody\">")
-    .text(data.message)
-    .css("font-style","italic");
-
+      .text(data.message)
+      .css("font-style", "italic");
 
     const typingClass = data.typing ? "typing" : "";
     const $messageDiv = $("<li class=\"message\"/>")
@@ -158,7 +170,6 @@ $(() => {
 
   // Updates the typing event
   const updateTyping = () => {
-   
     if (connected) {
       if (!typing) {
         typing = true;
@@ -193,13 +204,12 @@ $(() => {
     }
     // When the client hits ENTER on their keyboard
     if (event.which === 13) {
-     
       if (username) {
         sendMessage();
         socket.emit("stop typing");
         typing = false;
       } else {
-       console.log("we have a problem");
+        console.log("we have a problem");
       }
     }
   });
@@ -222,7 +232,7 @@ $(() => {
 
   // Socket events
   // Whenever the server emits 'login', log the login message
-  
+
   socket.on("login", data => {
     connected = true;
     // Display the welcome message

@@ -2,30 +2,59 @@
 <html lang="en">
 
 <head>
-  <title>Passport Authentication</title>
+  <title>Gorilla's In The Mist</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/lumen/bootstrap.min.css">
+  <!-- favicon link -->
+  <link rel="icon" type="image/png" href="./favicon/favicon.ico">
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Julius+Sans+One&family=Montserrat+Subrayada:wght@700&display=swap" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css">
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <!-- Own stylesheet -->
   <link href="stylesheets/style.css" rel="stylesheet">
+
   <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
-  <script src="/js/socket.io.js"></script>
+  <!-- <script src="/js/socket.io.js"></script> -->
 
 
 </head>
 
 <body>
-  <nav class="navbar navbar-default">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="/logout">
-        Logout
-      </a>
-    </div>
-  </div>
-</nav>
+  <nav class="navbar">
+    
+
+      <button class="btn btn-primary" data-toggle="collapse" data-target="#collapseExample"><i class="fas fa-users"></i></button>
+
+      <div class="collapse" id="collapseExample">
+        <ul class="list-group">
+          <li class="list-group-item disabled" aria-disabled="true">Cras justo odio</li>
+          <li class="list-group-item">Dapibus ac facilisis in</li>
+          <li class="list-group-item">Morbi leo risus</li>
+          <li class="list-group-item">Porta ac consectetur ac</li>
+          <li class="list-group-item">Vestibulum at eros</li>
+        </ul>
+      </div>
+
+
+
+
+
+
+
+
+
+
+
+    <img src="./img/wiseMonkeyLogo.png" alt="logo">
+    <i class="fas fa-sign-out-alt"><a href="/login">Sign Out</a></i>
+  </nav>
+  
   <div class="container">
     <div class="row">
-      <div class="col-md-6 col-md-offset-3">
+      <div class="col-md-6 offset-md-3">
         <h2>Welcome <span class="member-name"></span></h2>
       </div>
     </div>
@@ -38,9 +67,12 @@
     </li>
   </div>
 
+
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 </body>
 
 </html>
 
-<script type="text/javascript" src="js/members.js"></script>
-<script src="js/main.js"></script>
+<!-- <script type="text/javascript" src="js/members.js"></script>
+<script src="js/main.js"></script> -->

@@ -18,12 +18,10 @@ $(() => {
   let $currentInput = $usernameInput.focus();
 
   const socket = io();
- 
-  
 
     // get the user details of the user
   $.getJSON("api/user_data", function(data) {
-    username = data.email;
+    username = data.username;
     console.log("the username is : " + username);
     $chatPage.show();
 
@@ -35,7 +33,6 @@ $(() => {
     socket.emit("add user", username, userID);
     connected = true;
   });
-
  
   // Prompt for setting a username
  

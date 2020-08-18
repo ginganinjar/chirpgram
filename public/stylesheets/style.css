@@ -1,6 +1,116 @@
-form.signup,
-form.login {
-  margin-top: 50px;
+/* Background */
+body {
+  background: url(../img/ChatBackground.jpg);
+  background-repeat: no-repeat;
+  background-size: 100vw 100vh;
+  background-attachment: fixed;
+  line-height: 1.5;
+  font-size: 1rem;
+}
+
+  /* Logo */
+  img {
+    transform: scale(0.3, 0.3);
+    position: absolute;
+    left: -150px;
+    top: -30px;
+  }
+
+/* Welcome & Sign Out font */
+h2, a {
+  font-family: 'Julius Sans One', sans-serif;
+}
+
+a {
+  color: black;
+  text-decoration-style: none;
+}
+
+/* SideBar  */
+
+.wrapper{
+  display: flex;
+  position: relative;
+}
+
+.wrapper .sidebar{
+  width: 200px;
+  height: 100%;
+  background:url(../img/MistBackground.jpg);
+  padding: 80px 0px;
+  position: fixed;
+}
+
+.wrapper {
+  color: black;
+  text-transform: uppercase;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.wrapper .sidebar ul li{
+  padding: 15px;
+  border-bottom: 1px solid #bdb8d7;
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+  border-top: 1px solid rgba(255,255,255,0.05);
+}   
+
+/* Chat page */
+
+.chat.page {
+  display: none;
+}
+
+/* User Joined/Left Logs  */
+.log {
+  color: gray;
+  font-size: 70%;
+  margin: 5px;
+  text-align: center;
+}
+
+/* Messages */
+
+.chatArea {
+  height: 100%;
+  padding-bottom: 60px;
+}
+
+/* User Typing Preview */
+.message.typing .messageBody {
+  color: gray;
+}
+
+
+.username {
+  font-weight: 700;
+  overflow: hidden;
+  padding-right: 15px;
+  text-align: right;
+}
+
+/* User Input Message Box */
+
+.inputMessage {
+  font-size: 100%;
+  border: 3px solid #000;
+  bottom: 0;
+  height: 60px;
+  left: 0;
+  outline: none;
+  padding-left: 10px;
+  position: absolute;
+  right: 0;
+  width: 100%;
+}
+
+/* Pages */
+
+.pages {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  width: 100%;
 }
 
 /* Fix user-agent */
@@ -25,12 +135,6 @@ html, input {
     sans-serif;
 }
 
-html, body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-}
-
 ul {
   list-style: none;
   word-wrap: break-word;
@@ -41,110 +145,4 @@ li {
   font-size: large;
 }
 
-/* Pages */
-
-.pages {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  width: 100%;
-}
-
-/* .page {
-  height: 100%;
-  position: absolute;
-  width: 100%;
-} */
-
-/* Login Page */
-
-.login.page {
-  background-color: #000;
-}
-
-.login.page .form {
-  height: 100px;
-  margin-top: -100px;
-  position: absolute;
-
-  text-align: center;
-  top: 50%;
-  width: 100%;
-}
-
-.login.page .form .usernameInput {
-  background-color: transparent;
-  border: none;
-  border-bottom: 2px solid #fff;
-  outline: none;
-  padding-bottom: 15px;
-  text-align: center;
-  width: 400px;
-}
-
-.login.page .title {
-  font-size: 200%;
-}
-
-.login.page .usernameInput {
-  font-size: 200%;
-  letter-spacing: 3px;
-}
-
-.login.page .title, .login.page .usernameInput {
-  color: #fff;
-  font-weight: 100;
-}
-
-/* Chat page */
-
-.chat.page {
-  display: none;
-}
-
-/* Font */
-
-
-.inputMessage {
-  font-size: 100%;
-}
-
-.log {
-  color: gray;
-  font-size: 70%;
-  margin: 5px;
-  text-align: center;
-}
-
-/* Messages */
-
-.chatArea {
-  height: 100%;
-  padding-bottom: 60px;
-}
-
-
-.message.typing .messageBody {
-  color: gray;
-}
-
-.username {
-  font-weight: 700;
-  overflow: hidden;
-  padding-right: 15px;
-  text-align: right;
-}
-
-/* Input */
-
-.inputMessage {
-  border: 3px solid #000;
-  bottom: 0;
-  height: 60px;
-  left: 0;
-  outline: none;
-  padding-left: 10px;
-  position: absolute;
-  right: 0;
-  width: 100%;
-}
+ 

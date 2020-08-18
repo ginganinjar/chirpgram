@@ -5,25 +5,29 @@
   <title>Passport Authentication</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/lumen/bootstrap.min.css">
-  <link href="stylesheets/style.css" rel="stylesheet">
+   <!-- favicon link -->
+   <link rel="icon" type="image/png" href="./favicon/favicon.ico">
+   <!-- Google Font -->
+   <link href="https://fonts.googleapis.com/css2?family=Julius+Sans+One&family=Montserrat+Subrayada:wght@700&display=swap" rel="stylesheet">
+   <!-- Bootstrap CSS -->
+   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+   <!-- Own CSS -->
+   <link href="stylesheets/styleLogin.css" rel="stylesheet">
 </head>
 
 <body>
-  <nav class="navbar navbar-default">
-    <div class="container-fluid">
-      <div class="navbar-header">
-      </div>
-    </div>
-  </nav>
+
+  <img src="./img/wiseMonkeyLogo.png" alt="logo">
+ 
   <div class="container">
-    <div class="row">
-      <div class="col-md-6 col-md-offset-3">
-        <h2>Sign Up Form</h2>
-        <form class="signup">
+    <div class="row loginContent">
+      <div class="col-md-6 offset-md-3">
+        <h1>Gorilla's In The Mist</h1>
+        <p>Anonymous Web Chat Application</p>
+        <form class="login">
           <div class="form-group">
-            <label for="exampleInputEmail1">Email address</label>
-            <input type="email" class="form-control" id="email-input" placeholder="Email">
+            <label for="exampleInputEmail1">Username</label>
+            <input type="email" class="form-control" id="email-input" placeholder="Enter Username">
           </div>
           <div class="form-group">
             <label for="exampleInputPassword1">Password</label>
@@ -33,10 +37,10 @@
             <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
             <span class="sr-only">Error:</span> <span class="msg"></span>
           </div>
-          <button type="submit" class="btn btn-default">Sign Up</button>
+          <button type="submit" class="btn btn-light">SIGN UP</button>
+          <p>Or log in <a href="/login">here</a></p>
         </form>
-        <br />
-        <p>Or log in <a href="/login">here</a></p>
+        
       </div>
     </div>
   </div>

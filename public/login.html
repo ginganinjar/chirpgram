@@ -26,16 +26,20 @@
         <p>Anonymous Web Chat Application</p>
         <form class="login">
           <div class="form-group">
-            <label for="exampleInputUsername">Username</label>
-            <input type="username class="form-control" id="username-input" placeholder="Enter Username">
+            <label for="exampleInputUsername1">Username</label>
+            <input type="username" class="form-control" id="username-input" placeholder="Enter Username">
           </div>
           <div class="form-group">
             <label for="exampleInputPassword1">Password</label>
             <input type="password" class="form-control" id="password-input" placeholder="Password">
           </div>
+          <div style="display: none" id="alert" class="alert alert-danger" role="alert">
+            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+            <span class="sr-only">Error:</span> <span class="msg"></span>
+          </div>
           <div class="loginBtn">
             <button type="submit" class="btn btn-light">LOGIN</button>
-            <button type="submit" class="btn btn-light">NEW USER</button>
+            <p class="loginSignUpHere">Or Sign Up <a href="/">Here</a></p>
           </div>
         </form>
       </div>

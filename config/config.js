@@ -6,6 +6,13 @@ const configData =
     database: process.env.DB_NAME,
     host: process.env.DB_HOST,
     dialect: "mysql"
+  // username: "root",
+  //    password: "letmein1",
+  //    database: "chatapplicatiomn",
+  //    host: "localhost",
+  //    dialect: "mysql"
+
+
   },
   test: {
     username: "root",

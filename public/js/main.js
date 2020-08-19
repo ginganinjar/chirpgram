@@ -19,57 +19,34 @@ $(() => {
 
   const socket = io();
 
-  // get the user details of the user
-  $.getJSON("api/user_data", data => {
-    username = data.username;
-    console.log("the username is : " + username);
-    $chatPage.show();
-
-    $currentInput = $inputMessage.focus();
-    console.log($currentInput);
-
-    console.log("Adding user to server");
-    userID = socket.id;
-    socket.emit("add user", username, userID);
-    connected = true;
-  });
-
-// send private message to user
+  // send private message to user
 
   $("#sendMSG").on("click", () => {
     const sendtothis = prompt("inser sendto address :");
 
-      let sendThis = {
-        toid: sendtothis,
-        message: "test",
-        username: "dave"
-      }
+    const sendThis = {
+      toid: sendtothis,
+      message: "test",
+      username: "dave"
+    };
 
     socket.emit("getMsg", sendThis);
-    addChatMessage(sendThis,"private");
-
+    addChatMessage(sendThis, "private");
   });
 
-  
   // group chat public message recieved
   socket.on("public message", data => {
-
     addChatMessage(data);
   });
 
-
   socket.on("recievedMessage", data => {
-   
     console.log(data);
     theMSG = data.message;
     fromMSG = data.username;
-    
 
-     //alert("Message recieved from :" + fromMSG + " : " + theMSG);
+    //alert("Message recieved from :" + fromMSG + " : " + theMSG);
     // log("Private Msg : user : " + fromMSG + " - " + theMSG);
-    addChatMessage(data,"private");
-
-
+    addChatMessage(data, "private");
   });
 
   // Prompt for setting a username
@@ -86,7 +63,7 @@ $(() => {
 
   // Sends a chat message
   const sendMessage = () => {
-   // console.log("inside send message");
+    // console.log("inside send message");
     let message = " : " + $inputMessage.val();
 
     // Prevent markup from being injected into the message
@@ -94,7 +71,6 @@ $(() => {
 
     // check connection state and message contents
     if (message && connected) {
-     
       $inputMessage.val("");
       addChatMessage({
         username: username,
@@ -126,9 +102,11 @@ $(() => {
       options.fade = false;
       $typingMessages.remove();
     }
-let pretext = "";
+    let pretext = "";
 
-    if (options == "private") {pretext = " Private Msg :"} 
+    if (options == "private") {
+      pretext = " Private Msg :";
+    }
 
     const $usernameDiv = $("<span class=\"username\"/>")
       .text(pretext + data.username)
@@ -263,6 +241,23 @@ let pretext = "";
 
   // Socket events
   // Whenever the server emits 'login', log the login message
+
+  socket.on("connect", () => {
+    // get the user details of the user
+    $.getJSON("api/user_data", data => {
+      username = data.username;
+      console.log("the username is : " + username);
+      $chatPage.show();
+
+      $currentInput = $inputMessage.focus();
+      console.log($currentInput);
+
+      console.log("Adding user to server");
+      userID = socket.id;
+      socket.emit("add user", username, userID);
+      connected = true;
+    });
+  });
 
   socket.on("login", data => {
     connected = true;

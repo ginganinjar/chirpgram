@@ -85,6 +85,18 @@ $(() => {
     }
   };
 
+  function processUsers(data) {
+  $("#users").empty();
+
+  // cycle through users
+  for (i = 0; i < data.length; i++) {
+      $( "#users" ).append( '<li data-id="'+ data[i][1] + '">' + data[i][0] + '</li>' );
+        }
+
+
+}
+
+
   // Log a message
   const log = (message, options) => {
     const $el = $("<li>")
@@ -255,6 +267,8 @@ $(() => {
       console.log("Adding user to server");
       userID = socket.id;
       socket.emit("add user", username, userID);
+      socket.emit("update userlist", username, userID);
+      
       connected = true;
     });
   });
@@ -300,6 +314,12 @@ $(() => {
   socket.on("disconnect", () => {
     log("you have been disconnected");
   });
+
+  socket.on("user list", data => {
+    console.log("in user list -> printing it out");
+      console.log(data);
+        processUsers(data);
+      });
 
   socket.on("reconnect", () => {
     log("you have been reconnected");

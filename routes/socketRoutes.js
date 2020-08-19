@@ -4,6 +4,8 @@ module.exports = function(io) {
 
   io.on("connection", socket => {
     // when the client emits 'add user', this listens and executes
+   
+  
     socket.on("add user", (username, socketID) => {
       // we add the user to a globalvariable of online users.
       onlineUsers.push([username, socketID]);
@@ -18,11 +20,18 @@ module.exports = function(io) {
         numUsers: onlineUsers.length
       });
       // echo globally (all clients) that a person has connected
-      socket.broadcast.emit("user joined", {
+
+      
+
+
+      socket.broadcast.emit("user joined", {   
         username: socket.username,
         numUsers: onlineUsers.length,
         socketAddress: socketID
       });
+
+      socket.broadcast.emit("user list", onlineUsers);
+
     });
 
     // when the client emits 'typing', we broadcast it to others
@@ -31,6 +40,12 @@ module.exports = function(io) {
         username: socket.username
       });
     });
+
+   // when the client emits 'typing', we broadcast it to others
+   socket.on("update userlist", () => {
+    socket.broadcast.emit("user list", onlineUsers);
+  });
+
 
     socket.on("new message", (data) => {
       console.log("new message recieved - bradcasting");
@@ -55,6 +70,8 @@ module.exports = function(io) {
         onlineUsers = onlineUsers.filter(item => item[0] !== socket.username);
         console.log(onlineUsers);
 
+        socket.broadcast.emit("user list", onlineUsers);
+
         // echo globally that this client has left
         socket.broadcast.emit("user left", {
           username: socket.username,
@@ -71,5 +88,8 @@ module.exports = function(io) {
         username: data.username
       });
     });
+
+    
+
   });
 };

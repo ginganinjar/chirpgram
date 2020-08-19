@@ -32,6 +32,12 @@ module.exports = function(io) {
       });
     });
 
+    socket.on("new message", (data) => {
+      console.log("new message recieved - bradcasting");
+      socket.broadcast.emit("public message", data);
+    });
+
+
     // when the client emits 'stop typing', we broadcast it to others
     socket.on("stop typing", () => {
       socket.broadcast.emit("stop typing", {
@@ -60,8 +66,9 @@ module.exports = function(io) {
       console.log("recieved getMSG file");
       console.log(data);
       socket.broadcast.to(data.toid).emit("recievedMessage", {
-        msg: data.msg,
-        name: data.name
+        toid : data.toid,
+        message: data.message,
+        username: data.username
       });
     });
   });

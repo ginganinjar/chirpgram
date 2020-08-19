@@ -3,6 +3,7 @@
 const dotenv = require("dotenv").config();
 
 const express = require("express");
+const exphbs = require("express-handlebars");
 // Creating express app and configuring middleware needed for authentication
 const app = express();
 
@@ -14,7 +15,7 @@ const passport = require("./config/passport");
 const PORT = process.env.PORT || 8080;
 const db = require("./models");
 
-const server = require("http'").createServer(app);
+const server = require("http").createServer(app);
 const io = require("socket.io")(server);
 
 app.use(express.urlencoded({ extended: true }));
@@ -22,8 +23,7 @@ app.use(express.json());
 // Routing
 app.use(express.static("public"));
 
-const exphbs = require("express-handlebars");
-
+//Set Handlebars
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 

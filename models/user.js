@@ -16,6 +16,30 @@ module.exports = function(sequelize, DataTypes) {
     password: {
       type: DataTypes.STRING,
       allowNull: false
+    }, 
+    // storing avatar file path
+    avatar: {
+      type: DataTypes.STRING
+    },
+    // location
+    location: {
+      type: DataTypes.STRING
+    },
+    // storing bio
+    bio: {
+      type: DataTypes.STRING
+    }, 
+    // store users likes
+    likes: {
+      type: DataTypes.STRING
+    }, 
+    // store email if wanted
+    email: {
+      type: DataTypes.STRING
+    },
+    // store phone number 
+    phone: {
+      type: DataTypes.STRING
     }
   });
   // Creating a custom method for our User model. This will check if an unhashed password entered by the user can be compared to the hashed password stored in our database

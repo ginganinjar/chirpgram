@@ -8,9 +8,12 @@ module.exports = function(io) {
   
     socket.on("add user", (username, socketID) => {
       // we add the user to a globalvariable of online users.
-      onlineUsers.push([username, socketID]);
-      console.log(onlineUsers);
+     
+      if (username !== null && username !== "null") {
+        onlineUsers.push([username, socketID]);
+            }
 
+  
       // we store the username in the socket session for this client
       socket.username = username;
       socket.id = socketID;
@@ -67,9 +70,11 @@ module.exports = function(io) {
         --numUsers;
 
         // remove user from array
+        if (socket.username !== null && socket.username !== "null") {
         console.log("Deleting" + socket.username);
         onlineUsers = onlineUsers.filter(item => item[0] !== socket.username);
         console.log(onlineUsers);
+        }
 
         socket.broadcast.emit("user list", onlineUsers);
 

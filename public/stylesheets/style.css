@@ -71,9 +71,42 @@ a {
 
 /* Messages */
 
+.chatStatus {
+text-align: center;
+font-weight: 900;
+
+}
+.return {
+
+
+  background-image: url("../img/return.png");
+  //background-size: 150px 150px;
+  background-size: 50px;
+  background-repeat: no-repeat;
+  height: 150px;
+  width: 150px;
+  float: right;
+  cursor: pointer;
+  /* visibility: hidden;  */
+}
+
 .chatArea {
-  height: 100%;
-  padding-bottom: 60px;
+  display: flex;
+  flex-direction: column-reverse;
+  height: 80VH;
+  overflow: hidden;
+}
+
+.popupMessages {
+  font-style:italic;
+  height : 86px;
+  text-align: center;
+  overflow : hidden;
+}
+
+.users {
+cursor: pointer;
+
 }
 
 /* User Typing Preview */
@@ -99,7 +132,7 @@ a {
   left: 0;
   outline: none;
   padding-left: 10px;
-  position: absolute;
+  position: fixed;
   right: 0;
   width: 100%;
 }

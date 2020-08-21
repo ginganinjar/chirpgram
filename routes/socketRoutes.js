@@ -41,12 +41,13 @@ module.exports = function(io) {
       });
     });
 
-   // when the client emits 'typing', we broadcast it to others
+  
    socket.on("update userlist", () => {
-    socket.broadcast.emit("user list", onlineUsers);
+   // socket.broadcast.emit("user list", onlineUsers);
+   io.emit("user list", onlineUsers);
   });
 
-
+ // when the client emits 'typing', we broadcast it to others
     socket.on("new message", (data) => {
       console.log("new message recieved - bradcasting");
       socket.broadcast.emit("public message", data);

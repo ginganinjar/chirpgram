@@ -71,7 +71,7 @@ $(() => {
   });
 
   socket.on("recievedMessage", (data) => {
-    console.log(data);
+   // recieved global message - post it
     theMSG = data.message;
     fromMSG = data.username;
 
@@ -92,7 +92,7 @@ $(() => {
 
   // Sends a chat message
   const sendMessage = () => {
-    // console.log("inside send message");
+  
     let message = " : " + $inputMessage.val();
 
     // Prevent markup from being injected into the message
@@ -144,7 +144,7 @@ $(() => {
     $("#popUpMessages").empty(); // clear notification
 
     let yellowAlert = null;
-    console.log("this is the type of alert" + typeOfAlert);
+  // workout request and provide appropriate alert type.
 
     yellowAlert = "/img/zooloo.png";
     if (typeOfAlert == null || typeOfAlert !== "red") {
@@ -284,7 +284,6 @@ $(() => {
       $currentInput.focus();
     }
     // When the client hits ENTER on their keyboard
-    console.log("Conversation type is : " + chattype);
 
     if (event.which === 13) {
       if (username) {
@@ -324,9 +323,7 @@ $(() => {
       $chatPage.show();
 
       $currentInput = $inputMessage.focus();
-      console.log($currentInput);
-
-      console.log("Adding user to server");
+      // sending this user information over to the server to add to array
       userID = socket.id;
       socket.emit("add user", username, userID);
       socket.emit("update userlist", username, userID);
@@ -380,8 +377,7 @@ $(() => {
   });
 
   socket.on("user list", (data) => {
-    console.log("in user list -> printing it out");
-    console.log(data);
+   // have recieved updated userlist - add it to the user panel
     processUsers(data);
   });
 

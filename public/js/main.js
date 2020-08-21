@@ -30,7 +30,7 @@ $(() => {
     sendToUserName = null;
     $(".chatStatus").text("You are broadcasting to everyone!");
     $(".return").css("visibility", "hidden");
-    addNotificationMessage("Everyone can see your messages","red");
+    addNotificationMessage("Everyone can see your messages", "red");
   };
 
   $(".return").on("click", () => {
@@ -49,7 +49,10 @@ $(() => {
 
     $(".chatStatus").text("Sending private messages to : " + sendToUserName);
     $(".return").css("visibility", "visible");
-    addNotificationMessage("Only " + sendToUserName + " can see your messages","green");
+    addNotificationMessage(
+      "Only " + sendToUserName + " can see your messages",
+      "green"
+    );
     // set the css of the sender to something idk what
 
     $(e.currentTarget).css("color", "red");
@@ -146,12 +149,10 @@ $(() => {
     yellowAlert = "/img/zooloo.png";
     if (typeOfAlert == null || typeOfAlert !== "red") {
       yellowAlert = "/img/alarm.png";
-    } 
-     if (typeOfAlert == "green") {
+    }
+    if (typeOfAlert == "green") {
       yellowAlert = "/img/green.png";
-       } 
-     
-    
+    }
 
     if (data) {
       const thisNotification = $("<div>");

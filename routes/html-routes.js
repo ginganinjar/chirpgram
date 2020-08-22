@@ -7,7 +7,7 @@ module.exports = function(app) {
     if (req.user) {
       res.render("chat");
     }
-    res.render("login");
+   // res.render("login");
   });
 
   app.get("/signup", (req, res) => {

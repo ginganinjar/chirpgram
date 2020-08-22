@@ -30,7 +30,11 @@ $(() => {
     sendToUserName = null;
     $(".chatStatus").text("You are broadcasting to everyone!");
     $(".return").css("visibility", "hidden");
+<<<<<<< HEAD
     addNotificationMessage("Everyone can see your messages","white");
+=======
+    addNotificationMessage("Everyone can see your messages", "red");
+>>>>>>> c487469f45c3b42464bc1b81b85d19052fde5244
   };
 
   $(".return").on("click", () => {
@@ -49,7 +53,10 @@ $(() => {
 
     $(".chatStatus").text("Sending private messages to : " + sendToUserName);
     $(".return").css("visibility", "visible");
-    addNotificationMessage("Only " + sendToUserName + " can see your messages","green");
+    addNotificationMessage(
+      "Only " + sendToUserName + " can see your messages",
+      "green"
+    );
     // set the css of the sender to something idk what
 
     $(e.currentTarget).css("color", "white");
@@ -68,7 +75,7 @@ $(() => {
   });
 
   socket.on("recievedMessage", (data) => {
-    console.log(data);
+   // recieved global message - post it
     theMSG = data.message;
     fromMSG = data.username;
 
@@ -88,7 +95,7 @@ $(() => {
   };
 
   const sendMessage = () => {
-    // console.log("inside send message");
+  
     let message = " : " + $inputMessage.val();
 
     // Prevent markup from being injected into the message
@@ -140,7 +147,7 @@ $(() => {
     $("#popUpMessages").empty(); // clear notification
 
     let yellowAlert = null;
-    console.log("this is the type of alert" + typeOfAlert);
+  // workout request and provide appropriate alert type.
 
     yellowAlert = "/img/Broadcast.png";
     if (typeOfAlert == null || typeOfAlert !== "white") {
@@ -280,7 +287,6 @@ $(() => {
       $currentInput.focus();
     }
     // When the client hits ENTER on their keyboard
-    console.log("Conversation type is : " + chattype);
 
     if (event.which === 13) {
       if (username) {
@@ -320,9 +326,7 @@ $(() => {
       $chatPage.show();
 
       $currentInput = $inputMessage.focus();
-      console.log($currentInput);
-
-      console.log("Adding user to server");
+      // sending this user information over to the server to add to array
       userID = socket.id;
       socket.emit("add user", username, userID);
       socket.emit("update userlist", username, userID);
@@ -376,8 +380,7 @@ $(() => {
   });
 
   socket.on("user list", (data) => {
-    console.log("in user list -> printing it out");
-    console.log(data);
+   // have recieved updated userlist - add it to the user panel
     processUsers(data);
   });
 

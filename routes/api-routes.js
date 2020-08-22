@@ -1,6 +1,20 @@
 // Requiring our models and passport as we've configured it
 const db = require("../models");
 const passport = require("../config/passport");
+const path = require("path")
+
+//code for file uploads using the middleware multer
+const multer = require("multer");
+
+const storage = multer.diskStorage({
+  destination: function(req, file, callback) {
+    callback(null, "./uploads");
+  },
+  filename: function(req, file, callback) {
+    callback(null, "username" + path.extname(file.originalname));
+  }
+});
+const upload = multer({ storage: storage }).single("userAvatar");
 
 module.exports = function(app) {
   // Using the passport.authenticate middleware with our local strategy.
@@ -49,5 +63,35 @@ module.exports = function(app) {
         id: req.user.id
       });
     }
+  });
+
+  app.post("/api/avatar", (req, res) => {
+    upload(req, res, err => {
+      if (err) {
+        return res.end("Error uploading file.");
+      }
+      res.end("File is uploaded");
+    });
+  });
+
+  app.get("/api/user_profile", (req, res) => {
+    // res.sendFile(__dirname + "/index.html");
+    //   if (!req.user) {
+    //     // The user is not logged in, send back an empty object
+    //     res.json({});
+    //   } else {
+    //     // Otherwise send back the user's username and id
+    //     // Sending back a password, even a hashed password, isn't a good idea
+    //     res.json({
+    //       username: req.user.username,
+    //       id: req.user.id,
+    //       avatar: req.user.avatar,
+    //       location: req.body.location,
+    //       bio: req.body.bio,
+    //       likes: req.body.likes,
+    //       email: req.body.email,
+    //       phone: req.body.phone
+    //     });
+    //   }
   });
 };

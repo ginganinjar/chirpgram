@@ -103,6 +103,7 @@ font-family: 'Julius Sans One', sans-serif;
   cursor: pointer;
 }
 
+
 /* User Typing Preview */
 .message.typing .messageBody {
   color: gray;

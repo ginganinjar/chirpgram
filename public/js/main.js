@@ -396,6 +396,8 @@ $(() => {
   });
 });
 
+// eslint-disable-next-line quotes
+$('[data-toggle="tooltip"]').tooltip();
 // $("#emoji").emojioneArea();
 
 // $(".inputMessage").emojioneArea();

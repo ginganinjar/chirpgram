@@ -19,7 +19,7 @@ module.exports = function(io) {
       addedUser = true;
       socket.emit("login", {
         numUsers: onlineUsers.length,
-      });
+      }); 
       // echo globally (all clients) that a person has connected
 
       socket.broadcast.emit("user joined", {
@@ -64,9 +64,7 @@ module.exports = function(io) {
         // remove user from array
         if (socket.username !== null && socket.username !== "null") {
           // reset online user array
-          onlineUsers = onlineUsers.filter(
-            (item) => item[0] !== socket.username
-          );
+          onlineUsers = onlineUsers.filter(item => item[0] !== socket.username);
         }
 
         socket.broadcast.emit("user list", onlineUsers);
@@ -84,6 +82,7 @@ module.exports = function(io) {
         toid: data.toid,
         message: data.message,
         username: data.username,
+        usercolor: usercolor,
       });
     });
   });

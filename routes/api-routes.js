@@ -96,7 +96,6 @@ module.exports = function(app) {
       res.redirect("/profile");
     });
   });
-
   app.put("/api/updateUser", (req, res) => {
     if (!req.user) {
       // The user is not logged in, send back an empty object
@@ -116,6 +115,5 @@ module.exports = function(app) {
         }
       }
     );
-    res.redirect("/profile");
   });
 };

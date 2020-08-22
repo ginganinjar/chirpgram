@@ -1,7 +1,7 @@
 // Requiring our models and passport as we've configured it
 const db = require("../models");
 const passport = require("../config/passport");
-const path = require("path")
+const path = require("path");
 
 //code for file uploads using the middleware multer
 const multer = require("multer");
@@ -65,6 +65,16 @@ module.exports = function(app) {
     }
   });
 
+  app.get("/api/profile", (req, res) => {
+    db.User.findOne({
+      where: {
+        username: req.user.username
+      }
+    }).then(data => {
+      res.json(data);
+    });
+  });
+
   app.post("/api/avatar", (req, res) => {
     upload(req, res, err => {
       if (err) {
@@ -72,26 +82,5 @@ module.exports = function(app) {
       }
       res.end("File is uploaded");
     });
-  });
-
-  app.get("/api/user_profile", (req, res) => {
-    // res.sendFile(__dirname + "/index.html");
-    //   if (!req.user) {
-    //     // The user is not logged in, send back an empty object
-    //     res.json({});
-    //   } else {
-    //     // Otherwise send back the user's username and id
-    //     // Sending back a password, even a hashed password, isn't a good idea
-    //     res.json({
-    //       username: req.user.username,
-    //       id: req.user.id,
-    //       avatar: req.user.avatar,
-    //       location: req.body.location,
-    //       bio: req.body.bio,
-    //       likes: req.body.likes,
-    //       email: req.body.email,
-    //       phone: req.body.phone
-    //     });
-    //   }
   });
 };

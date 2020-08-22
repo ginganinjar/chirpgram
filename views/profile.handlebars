@@ -1,11 +1,13 @@
+<label>Avatar Image</label>
+<img alt="avatar image" src="uploads/placeholder.png">
 <form id="uploadForm" enctype="multipart/form-data" action="/api/avatar" method="post">
-  <label>Avatar Image</label>
+  
   <input type="file" id="avatar" name="userAvatar">
   <input type="submit" value="Upload Image" name="submit">
   <span id = "status"></span>
-  <br />
-  <img alt="avatar image" src="./uploads/placeholder.png">
-  <br />
+</form>
+
+<form id="updateUser" action="/api/updateUser" method="put"> 
   <label>Bio:</label>
   <input type="text" id="bio" name="bio">
   <br />
@@ -20,7 +22,7 @@
   <br />
   <label>Phone:</label>
   <input type="text" id="phone" name="phone">
-</form>
+</form>  
 
 <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery.form/3.51/jquery.form.min.js"></script>
 <script>
@@ -38,10 +40,10 @@
             success: function(response) {
 					console.log(response)
 					$("#status").empty().text(response);
-            }
+          }
 	});
 
 	return false;
-    });    
+  });    
 });
 </script>

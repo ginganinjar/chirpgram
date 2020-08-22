@@ -1,33 +1,35 @@
-   <!-- Own CSS -->
-  <link href="stylesheets/style.css" rel="stylesheet">
-  
-  <div class="wrapper">
-    <div class="sidebar">
-    <img src="./img/wiseMonkeyLogo.png" alt="logo">
-    <i class="fas fa-sign-out-alt"><a href="/logout"> Sign Out</a></i>
-        
-        <ul>
-         <div id="users" class="users"></div>
+{{!-- <link rel="stylesheet" href="stylesheets/emojionearea.min.css"> --}}
+<link href="stylesheets/style.css" rel="stylesheet">
 
-        </ul> 
-    </div>
-  </div>
+<div class="container">
+  <div class="flex-grid">
+    <aside class="col sidebar">
+      <img id="logo" src="./img/wiseMonkeyLogo.png" alt="logo">
 
-  <div class="container">
-
-    <div class="row">
-      <div class="col-md-6 offset-md-3">
-        <h2>Welcome <span class="member-name"></span></h2>
+      <div class="sideMenu">
+        <i class="fas fa-sign-out-alt"><a href="/logout"> Sign Out</a></i>
+        <div id="users" class="users"></div>
       </div>
-    </div>
-
-    <li class="chat page">
-      <div class="return"></div>
-      <div class="chatStatus"></div>  
-      <div class="popupMessages" id="popUpMessages"></div>
-      <div class="chatArea">
-        <ul class="messages"></ul>
+    </aside>
+    <section class="col main">
+      
+      <h2>Welcome <span class="member-name"></span></h2>
+      <div class="statusHeader">
+        <div class="chatStatus"></div>
+        <div class="popupMessages" id="popUpMessages"></div>
       </div>
-      <input class="inputMessage" placeholder="Type here..."/>
-    </li>
+      
+      <div class="return"><i class="far fa-arrow-alt-circle-left fa-3x"></i></div>
+
+      <div class="chat page">
+        <div class="chatArea">
+          <ul class="messages"></ul>
+        </div>
+      </div>
+
+    </section>
   </div>
+</div>
+
+<input id="emoji" class="inputMessage" placeholder="Type here..."/>
+

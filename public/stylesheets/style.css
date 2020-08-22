@@ -8,16 +8,16 @@ body {
   font-size: 1rem;
 }
 
-  /* Logo */
-  img {
-    transform: scale(0.3, 0.3);
-    position: absolute;
-    left: -150px;
-    top: -30px;
-  }
+/* Logo */
+#logo {
+  transform: scale(0.3, 0.3);
+  position: absolute;
+  left: -150px;
+  top: -30px;
+}
 
 /* Welcome & Sign Out font */
-h2, a {
+h2, a, html, input {
   font-family: 'Julius Sans One', sans-serif;
 }
 
@@ -26,94 +26,88 @@ a {
   text-decoration-style: none;
 }
 
-/* SideBar  */
+.container {
+  max-width: 100vw;
+  padding: 0px;
+  line-height: 1.5;
+}
 
-.wrapper{
+.flex-grid {
   display: flex;
-  position: relative;
 }
 
-.wrapper .sidebar{
-  width: 200px;
-  height: 100%;
+.col {
+  padding: 1rem;
+}
+
+.sidebar {
   background:url(../img/MistBackground.jpg);
-  padding: 80px 0px;
-  position: fixed;
+  flex: 1;
 }
 
-.wrapper {
+.sideMenu {
   color: black;
+  height: 90vh;
   text-transform: uppercase;
-  text-align: center;
-  margin-bottom: 30px;
+  padding: 60px 30px 0px 30px;
 }
 
-.wrapper .sidebar ul li{
-  padding: 15px;
-  border-bottom: 1px solid #bdb8d7;
-  border-bottom: 1px solid rgba(0,0,0,0.05);
-  border-top: 1px solid rgba(255,255,255,0.05);
-}   
+/* Chat Area */
 
-/* Chat page */
-
-.chat.page {
-  display: none;
-}
-
-/* User Joined/Left Logs  */
-.log {
-  color: gray;
-  font-size: 70%;
-  margin: 5px;
+.main {
+  flex: 6;
   text-align: center;
 }
 
-/* Messages */
-
-.chatStatus {
-text-align: center;
-font-weight: 900;
-
-}
-.return {
-
-
-  background-image: url("../img/return.png");
-  //background-size: 150px 150px;
-  background-size: 50px;
-  background-repeat: no-repeat;
-  height: 150px;
-  width: 150px;
-  float: right;
-  cursor: pointer;
-  /* visibility: hidden;  */
-}
-
-.chatArea {
+.chat {
+  text-align: left;
   display: flex;
   flex-direction: column-reverse;
-  height: 80VH;
-  overflow: hidden;
+  height: 65vh;
+  overflow-y: scroll;
+  padding-right: 20px;
+}
+
+/* Landing Messages */
+
+.chatStatus {
+font-weight:  bolder;
+font-family: 'Julius Sans One', sans-serif;
 }
 
 .popupMessages {
-  font-style:italic;
-  height : 86px;
-  text-align: center;
-  overflow : hidden;
+  color: cadetblue;
+  font-family: 'Julius Sans One', sans-serif;
 }
 
-.users {
-cursor: pointer;
-
+.statusHeader {
+	animation: pulse-white 3s infinite;
 }
+
+@keyframes pulse-white {
+	0% {
+		transform: scale(0.9);
+	}
+	
+	70% {
+		transform: scale(0.95);
+	}
+	
+	100% {
+		transform: scale(0.9);
+	}
+}
+
+.return {
+  text-align: left;
+  cursor: pointer;
+}
+
 
 /* User Typing Preview */
 .message.typing .messageBody {
   color: gray;
 }
-
 
 .username {
   font-weight: 700;
@@ -126,47 +120,19 @@ cursor: pointer;
 
 .inputMessage {
   font-size: 100%;
-  border: 3px solid #000;
+  border: 3px solid black;;
   bottom: 0;
-  height: 60px;
+  height: 10vh;
   left: 0;
   outline: none;
   padding-left: 10px;
   position: fixed;
   right: 0;
-  width: 100%;
-}
-
-/* Pages */
-
-.pages {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  width: 100%;
+  width: 100vw;
 }
 
 /* Fix user-agent */
 
-* {
-  box-sizing: border-box;
-}
-
-html {
-  font-weight: 300;
-  -webkit-font-smoothing: antialiased;
-}
-
-html, input {
-  font-family:
-    "HelveticaNeue-Light",
-    "Helvetica Neue Light",
-    "Helvetica Neue",
-    Helvetica,
-    Arial,
-    "Lucida Grande",
-    sans-serif;
-}
 
 ul {
   list-style: none;
@@ -174,8 +140,31 @@ ul {
 }
 
 li {
+  padding: 10px 5px 10px 5px;
   list-style:none;
   font-size: large;
 }
 
- 
+.userList:hover {
+  color: white;
+  border: solid white;
+  cursor: pointer;
+}
+
+::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	background-color: transparent;
+}
+
+::-webkit-scrollbar
+{
+	width: 10px;
+	background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb
+{
+	background-color: #000000;
+	border: 2px solid #555555;
+}

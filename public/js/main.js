@@ -30,7 +30,7 @@ $(() => {
     sendToUserName = null;
     $(".chatStatus").text("You are broadcasting to everyone!");
     $(".return").css("visibility", "hidden");
-    addNotificationMessage("Everyone can see your messages","red");
+    addNotificationMessage("Everyone can see your messages","white");
   };
 
   $(".return").on("click", () => {
@@ -49,10 +49,13 @@ $(() => {
 
     $(".chatStatus").text("Sending private messages to : " + sendToUserName);
     $(".return").css("visibility", "visible");
-    addNotificationMessage("Only " + sendToUserName + " can see your messages","green");
+    addNotificationMessage(
+      "Only " + sendToUserName + " can see your messages",
+      "green"
+    );
     // set the css of the sender to something idk what
 
-    $(e.currentTarget).css("color", "red");
+    $(e.currentTarget).css("color", "white");
 
     $(".message").each(function() {
       // if this message is not from the selected user, hide it
@@ -68,7 +71,7 @@ $(() => {
   });
 
   socket.on("recievedMessage", (data) => {
-    console.log(data);
+   // recieved global message - post it
     theMSG = data.message;
     fromMSG = data.username;
 
@@ -87,9 +90,8 @@ $(() => {
     addNotificationMessage(message);
   };
 
-  // Sends a chat message
   const sendMessage = () => {
-    // console.log("inside send message");
+  
     let message = " : " + $inputMessage.val();
 
     // Prevent markup from being injected into the message
@@ -141,17 +143,15 @@ $(() => {
     $("#popUpMessages").empty(); // clear notification
 
     let yellowAlert = null;
-    console.log("this is the type of alert" + typeOfAlert);
+  // workout request and provide appropriate alert type.
 
-    yellowAlert = "/img/zooloo.png";
-    if (typeOfAlert == null || typeOfAlert !== "red") {
-      yellowAlert = "/img/alarm.png";
-    } 
-     if (typeOfAlert == "green") {
-      yellowAlert = "/img/green.png";
-       } 
-     
-    
+    yellowAlert = "/img/Broadcast.png";
+    if (typeOfAlert == null || typeOfAlert !== "white") {
+      yellowAlert;
+    }
+    if (typeOfAlert == "green") {
+      yellowAlert = "/img/Private.png";
+    }
 
     if (data) {
       const thisNotification = $("<div>");
@@ -184,7 +184,7 @@ $(() => {
 
     const $usernameDiv = $('<span class="username"/ id="' + data.userid + '">')
       .text(pretext + data.username)
-      .css("color", "red");
+      .css("color", "darkslateblue");
 
     const $messageBodyDiv = $('<span class="messageBody">')
       .text(data.message)
@@ -283,7 +283,6 @@ $(() => {
       $currentInput.focus();
     }
     // When the client hits ENTER on their keyboard
-    console.log("Conversation type is : " + chattype);
 
     if (event.which === 13) {
       if (username) {
@@ -300,7 +299,7 @@ $(() => {
     updateTyping();
   });
 
-  // Click events
+  // Click event
 
   // Focus input when clicking anywhere on login page
   $loginPage.click(() => {
@@ -323,9 +322,7 @@ $(() => {
       $chatPage.show();
 
       $currentInput = $inputMessage.focus();
-      console.log($currentInput);
-
-      console.log("Adding user to server");
+      // sending this user information over to the server to add to array
       userID = socket.id;
       socket.emit("add user", username, userID);
       socket.emit("update userlist", username, userID);
@@ -359,7 +356,7 @@ $(() => {
 
   // Whenever the server emits 'user left', log it in the chat body
   socket.on("user left", (data) => {
-    addNotificationMessage(data.username + " left", "red");
+    addNotificationMessage(data.username + " left", "white");
     addParticipantsMessage(data);
     removeChatTyping(data);
   });
@@ -375,12 +372,11 @@ $(() => {
   });
 
   socket.on("disconnect", () => {
-    addNotificationMessage("you have been disconnected", "red");
+    addNotificationMessage("you have been disconnected", "white");
   });
 
   socket.on("user list", (data) => {
-    console.log("in user list -> printing it out");
-    console.log(data);
+   // have recieved updated userlist - add it to the user panel
     processUsers(data);
   });
 
@@ -395,7 +391,11 @@ $(() => {
   });
 
   socket.on("reconnect_error", () => {
-    addNotificationMessage("attempt to reconnect has failed", "red");
+    addNotificationMessage("attempt to reconnect has failed", "white");
     socket.emit("hi", "everyone");
   });
 });
+
+// $("#emoji").emojioneArea();
+
+// $(".inputMessage").emojioneArea();

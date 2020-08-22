@@ -1,42 +1,25 @@
+<label>Avatar Image</label>
+<img alt="avatar image" src="/public/uploads/placeholder.png">
 <form id="uploadForm" enctype="multipart/form-data" action="/api/avatar" method="post">
-  <input type="file" name="userAvatar">
+  
+  <input type="file" id="avatar" name="userAvatar">
   <input type="submit" value="Upload Image" name="submit">
   <span id = "status"></span>
-  <br />
-  <img alt="avatar image" src="./uploads/placeholder.png">
-  <br />
-  <input type="text" name="bio">
-    <br />
-  <input type="text" name="location">
-    <br />
-  <input type="text" name="likes">
-    <br />
-  <input type="text" name="email">
-    <br />
-  <input type="text" name="phone">
 </form>
 
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery.form/3.51/jquery.form.min.js"></script>
-<script>
-  $(document).ready(function() {
-
-     $('#uploadForm').submit(function() {
-		 $("#status").empty().text("File is uploading...");
-
-        $(this).ajaxSubmit({
-
-            error: function(xhr) {
-		            status('Error: ' + xhr.status);
-            },
-
-            success: function(response) {
-					console.log(response)
-					$("#status").empty().text(response);
-            }
-	});
-
-	return false;
-    });    
-});
-</script>
+<form id="updateUser" action="/api/updateUser" method="put"> 
+  <label>Bio:</label>
+  <input type="text" id="bio" name="bio">
+  <br />
+  <label>Location:</label>
+  <input type="text" id="location" name="location">
+  <br />
+  <label>Likes:</label>
+  <input type="text" id="likes" name="likes">
+  <br />
+  <label>Email:</label>
+  <input type="text" id="email" name="email">
+  <br />
+  <label>Phone:</label>
+  <input type="text" id="phone" name="phone">
+</form>  

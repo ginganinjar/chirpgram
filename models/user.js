@@ -9,37 +9,43 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       unique: true,
       validate: {
-        len:[1]
+        len: [1]
       }
     },
     // The password cannot be null
     password: {
       type: DataTypes.STRING,
       allowNull: false
-    }, 
+    },
     // storing avatar file path
     avatar: {
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
+      defaultValue: "Avatar"
     },
     // location
     location: {
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
+      defaultValue: "Location"
     },
     // storing bio
     bio: {
-      type: DataTypes.STRING
-    }, 
+      type: DataTypes.STRING,
+      defaultValue: "Bio"
+    },
     // store users likes
     likes: {
-      type: DataTypes.STRING
-    }, 
+      type: DataTypes.STRING,
+      defaultValue: "Likes"
+    },
     // store email if wanted
     email: {
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
+      defaultValue: "Email"
     },
     // store phone number 
     phone: {
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
+      defaultValue: "Phone"
     }
   });
   // Creating a custom method for our User model. This will check if an unhashed password entered by the user can be compared to the hashed password stored in our database

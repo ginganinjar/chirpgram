@@ -1,17 +1,17 @@
 // Requiring our models and passport as we've configured it
 const db = require("../models");
 const passport = require("../config/passport");
-const path = require("path")
+const path = require("path");
 
 //code for file uploads using the middleware multer
 const multer = require("multer");
 
 const storage = multer.diskStorage({
   destination: function(req, file, callback) {
-    callback(null, "./uploads");
+    callback(null, "./public/uploads");
   },
   filename: function(req, file, callback) {
-    callback(null, "username" + path.extname(file.originalname));
+    callback(null, "userAvatar" + Date.now() + path.extname(file.originalname));
   }
 });
 const upload = multer({ storage: storage }).single("userAvatar");
@@ -54,15 +54,28 @@ module.exports = function(app) {
   app.get("/api/user_data", (req, res) => {
     if (!req.user) {
       // The user is not logged in, send back an empty object
-      res.json({});
-    } else {
-      // Otherwise send back the user's username and id
-      // Sending back a password, even a hashed password, isn't a good idea
-      res.json({
-        username: req.user.username,
-        id: req.user.id
-      });
+      return res.json({});
     }
+    // Otherwise send back the user's username and id
+    // Sending back a password, even a hashed password, isn't a good idea
+    res.json({
+      username: req.user.username,
+      id: req.user.id
+    });
+  });
+
+  app.get("/api/profile", (req, res) => {
+    if (!req.user) {
+      // The user is not logged in, send back an empty object
+      return res.json({});
+    }
+    db.User.findOne({
+      where: {
+        id: req.user.id
+      }
+    }).then(data => {
+      res.json(data);
+    });
   });
 
   app.post("/api/avatar", (req, res) => {
@@ -70,28 +83,38 @@ module.exports = function(app) {
       if (err) {
         return res.end("Error uploading file.");
       }
-      res.end("File is uploaded");
+      db.User.update(
+        {
+          avatar: req.file.filename
+        },
+        {
+          where: {
+            id: req.user.id
+          }
+        }
+      );
+      res.redirect("/profile");
     });
   });
 
-  app.get("/api/user_profile", (req, res) => {
-    // res.sendFile(__dirname + "/index.html");
-    //   if (!req.user) {
-    //     // The user is not logged in, send back an empty object
-    //     res.json({});
-    //   } else {
-    //     // Otherwise send back the user's username and id
-    //     // Sending back a password, even a hashed password, isn't a good idea
-    //     res.json({
-    //       username: req.user.username,
-    //       id: req.user.id,
-    //       avatar: req.user.avatar,
-    //       location: req.body.location,
-    //       bio: req.body.bio,
-    //       likes: req.body.likes,
-    //       email: req.body.email,
-    //       phone: req.body.phone
-    //     });
-    //   }
+  app.put("api/updateUser", (req, res) => {
+    if (!req.user) {
+      // The user is not logged in, send back an empty object
+      return res.json({});
+    }
+    db.User.update(
+      {
+        location: req.body.location,
+        bio: req.body.bio,
+        likes: req.body.likes,
+        email: req.body.email,
+        phone: req.body.phone
+      },
+      {
+        where: {
+          id: req.user.id
+        }
+      }
+    );
   });
 };

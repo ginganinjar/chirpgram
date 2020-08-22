@@ -3,6 +3,9 @@ $(document).ready(() => {
   const loginForm = $("form.login");
   const usernameInput = $("input#username-input");
   const passwordInput = $("input#password-input");
+  const $accessDenied = $("#accessDenied");
+
+  $accessDenied.hide();
 
   // When the form is submitted, we validate there's an username and password entered
   loginForm.on("submit", event => {
@@ -34,6 +37,10 @@ $(document).ready(() => {
       })
       .catch(err => {
         console.log(err);
+        $accessDenied.show();
+        setTimeout(() => {
+          $accessDenied.hide();
+        }, 3000);
       });
   }
 });

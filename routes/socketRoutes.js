@@ -5,11 +5,11 @@ module.exports = function(io) {
   io.on("connection", (socket) => {
     // when the client emits 'add user', this listens and executes
 
-    socket.on("add user", (username, socketID) => {
+    socket.on("add user", (username, socketID, avatar) => {
       // we add the user to a globalvariable of online users.
 
       if (username !== null && username !== "null") {
-        onlineUsers.push([username, socketID]);
+        onlineUsers.push([username, socketID, avatar]);
       }
 
       // we store the username in the socket session for this client

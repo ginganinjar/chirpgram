@@ -1,8 +1,8 @@
 <label>Avatar Image</label>
-<img alt="avatar image" src="/public/uploads/placeholder.png">
+<img id="avatar" alt="avatar image" src="">
 <form id="uploadForm" enctype="multipart/form-data" action="/api/avatar" method="post">
   
-  <input type="file" id="avatar" name="userAvatar">
+  <input type="file" name="userAvatar">
   <input type="submit" value="Upload Image" name="submit">
   <span id = "status"></span>
 </form>

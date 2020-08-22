@@ -11,7 +11,7 @@ const storage = multer.diskStorage({
     callback(null, "./uploads");
   },
   filename: function(req, file, callback) {
-    callback(null, "username" + path.extname(file.originalname));
+    callback(null, Date.now() + path.extname(file.originalname));
   }
 });
 const upload = multer({ storage: storage }).single("userAvatar");

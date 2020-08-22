@@ -11,6 +11,7 @@ $(() => {
   const $loginPage = $(".login.page"); // The login page
   const $chatPage = $(".chat.page"); // The chatroom page
   let username;
+  let usercolor = 8;
 
   let connected = false;
   let typing = false;
@@ -22,6 +23,7 @@ $(() => {
   let sendToUserID = null;
   let sendToUserName = null;
 
+  let colorArray = ["#ffc107","007bff","#6610f2","#e83e8c","#dc3545","#fd7e14","#28a745","#20c997","#17a2b8","#fff","#6c757d","#343a40","#007bff","#6c757d","#28a745","17a2b8","#ffc107","#dc3545","#f8f9fa","#343a40"]
   const socket = io();
 
   const setPublicChatStatus = () => {
@@ -30,7 +32,7 @@ $(() => {
     sendToUserName = null;
     $(".chatStatus").text("You are broadcasting to everyone!");
     $(".return").css("visibility", "hidden");
-    addNotificationMessage("Everyone can see your messages","white");
+    addNotificationMessage("Everyone can see your messages", "white");
   };
 
   $(".return").on("click", () => {
@@ -71,7 +73,7 @@ $(() => {
   });
 
   socket.on("recievedMessage", (data) => {
-   // recieved global message - post it
+    // recieved global message - post it
     theMSG = data.message;
     fromMSG = data.username;
 
@@ -91,7 +93,6 @@ $(() => {
   };
 
   const sendMessage = () => {
-  
     let message = " : " + $inputMessage.val();
 
     // Prevent markup from being injected into the message
@@ -104,6 +105,7 @@ $(() => {
         userid: socket.id,
         username: username,
         message: message,
+        usercolor: usercolor,
       });
       // tell server to execute 'new message' and send along one parameter
 
@@ -112,6 +114,7 @@ $(() => {
           toid: sendToUserID,
           message: message,
           username: username,
+          usercolor: usercolor,
         };
         socket.emit("getMsg", sendThis);
       } else {
@@ -119,20 +122,21 @@ $(() => {
           userid: socket.id,
           message: message,
           username: username,
+          usercolor: usercolor,
         });
       }
     }
   };
 
   function processUsers(data) {
-    $("#users").empty();
-
-  
+    $(".users").empty();
 
     // cycle through users
     for (i = 0; i < data.length; i++) {
-      $("#users").append(
-        '<a href="#" ><img src="/uploads/' + data[i][2] + '"width="25px" height="25px"><li class="userList" data-id="' +
+      $(".users").append(
+        '<a href="#" ><img src="/uploads/' +
+          data[i][2] +
+          '"width="25px" height="25px"><li class="userList" data-id="' +
           data[i][1] +
           '">' +
           data[i][0] +
@@ -145,7 +149,7 @@ $(() => {
     $("#popUpMessages").empty(); // clear notification
 
     let yellowAlert = null;
-  // workout request and provide appropriate alert type.
+    // workout request and provide appropriate alert type.
 
     yellowAlert = "/img/Broadcast.png";
     if (typeOfAlert == null || typeOfAlert !== "white") {
@@ -172,6 +176,9 @@ $(() => {
   // Adds the visual chat message to the message list
   const addChatMessage = (data, options) => {
     // Don't fade the message in if there is an 'X was typing'
+   
+   console.log(data);
+   
     const $typingMessages = getTypingMessages(data);
     options = options || {};
     if ($typingMessages.length !== 0) {
@@ -186,7 +193,7 @@ $(() => {
 
     const $usernameDiv = $('<span class="username"/ id="' + data.userid + '">')
       .text(pretext + data.username)
-      .css("color", "darkslateblue");
+      .css("color", colorArray[data.usercolor]);
 
     const $messageBodyDiv = $('<span class="messageBody">')
       .text(data.message)
@@ -279,16 +286,52 @@ $(() => {
 
   // Keyboard events
 
+    const resetColorScheme = () => {
+      
+      $(".username").each(function() {
+
+        // check if this userid is the same as the poster changing the color
+        if (this.id == socket.id) {
+          $($(this)).css("color", colorArray[usercolor]);
+        }
+      });
+
+  };
+
+
+
   $window.keydown((event) => {
     // Auto-focus the current input when a key is typed
     if (!(event.ctrlKey || event.metaKey || event.altKey)) {
       $currentInput.focus();
     }
-    // When the client hits ENTER on their keyboard
+    // 38 is up - 40 is down.
+
+    // When the client hits up on their keyboard
+    if (event.which == 38) {
+      // add the current user color
+      usercolor++;
+    }
+
+    // When the client hits down on their keyboard
+    if (event.which == 40) {
+      // reduce the current user color
+      usercolor--;
+    }
+
+    if (usercolor < 0) {usercolor = colorArray.length;}
+    if (usercolor > colorArray.length) {usercolor = 0;}
+    // reset the display to present colors as the user wants.
+    if (event.which == 40 || event.which == 38) {
+       resetColorScheme();
+    }
 
     if (event.which === 13) {
       if (username) {
-        sendMessage();
+        // dont forward null
+        if ($inputMessage.val() !== "") {
+          sendMessage();
+        }
         socket.emit("stop typing");
         typing = false;
       } else {
@@ -323,7 +366,7 @@ $(() => {
       username = data.username;
       avatar = data.avatar;
 
-     // console.log(avatar);
+      // console.log(avatar);
       $chatPage.show();
 
       $currentInput = $inputMessage.focus();
@@ -381,7 +424,7 @@ $(() => {
   });
 
   socket.on("user list", (data) => {
-   // have recieved updated userlist - add it to the user panel
+    // have recieved updated userlist - add it to the user panel
     processUsers(data);
   });
 
@@ -403,4 +446,4 @@ $(() => {
 
 // eslint-disable-next-line quotes
 $('[data-toggle="tooltip"]').tooltip();
-// $("#emoji").emojioneArea();
+

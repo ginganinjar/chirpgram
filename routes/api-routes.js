@@ -97,7 +97,7 @@ module.exports = function(app) {
     });
   });
 
-  app.put("api/updateUser", (req, res) => {
+  app.put("/api/updateUser", (req, res) => {
     if (!req.user) {
       // The user is not logged in, send back an empty object
       return res.json({});
@@ -116,5 +116,6 @@ module.exports = function(app) {
         }
       }
     );
+    res.redirect("/profile");
   });
 };

@@ -30,11 +30,7 @@ $(() => {
     sendToUserName = null;
     $(".chatStatus").text("You are broadcasting to everyone!");
     $(".return").css("visibility", "hidden");
-<<<<<<< HEAD
     addNotificationMessage("Everyone can see your messages","white");
-=======
-    addNotificationMessage("Everyone can see your messages", "red");
->>>>>>> c487469f45c3b42464bc1b81b85d19052fde5244
   };
 
   $(".return").on("click", () => {

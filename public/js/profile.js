@@ -54,7 +54,7 @@ $(document).ready(() => {
 
     $.ajax({
       method: "PUT",
-      url: "/api/updateuser",
+      url: "/api/updateUser",
       data: userInfo
     }).then(() => {
       window.location.href = "/profile";

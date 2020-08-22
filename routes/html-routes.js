@@ -44,7 +44,7 @@ module.exports = function(app) {
     return res.render("chat");
   });
 
-  app.get("/profile", (req, res) => {
+  app.get("/profile", isAuthenticated, (req, res) => {
     return res.render("profile");
   });
 };

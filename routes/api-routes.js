@@ -66,13 +66,18 @@ module.exports = function(app) {
   });
 
   app.get("/api/profile", (req, res) => {
-    db.User.findOne({
-      where: {
-        username: req.user.username
-      }
-    }).then(data => {
-      res.json(data);
-    });
+    if (!req.user) {
+      // The user is not logged in, send back an empty object
+      res.json({});
+    } else {
+      db.User.findOne({
+        where: {
+          id: req.user.id
+        }
+      }).then(data => {
+        res.json(data);
+      });
+    }
   });
 
   app.post("/api/avatar", (req, res) => {
@@ -80,7 +85,17 @@ module.exports = function(app) {
       if (err) {
         return res.end("Error uploading file.");
       }
-      res.end("File is uploaded");
+      db.User.update(
+        {
+          avatar: req.file.path
+        },
+        {
+          where: {
+            id: req.user.id
+          }
+        }
+      );
+      res.redirect("/profile");
     });
   });
 };

@@ -137,7 +137,7 @@ $(() => {
           "</li>"
       );
     }
-  }
+  }{
 
   const addNotificationMessage = (data, typeOfAlert) => {
     $("#popUpMessages").empty(); // clear notification

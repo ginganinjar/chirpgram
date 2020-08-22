@@ -8,7 +8,7 @@ const multer = require("multer");
 
 const storage = multer.diskStorage({
   destination: function(req, file, callback) {
-    callback(null, "./uploads");
+    callback(null, "./public/uploads");
   },
   filename: function(req, file, callback) {
     callback(null, "userAvatar" + Date.now() + path.extname(file.originalname));

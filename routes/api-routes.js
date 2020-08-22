@@ -5,6 +5,7 @@ const path = require("path");
 
 //code for file uploads using the middleware multer
 const multer = require("multer");
+const user = require("../models/user");
 
 const storage = multer.diskStorage({
   destination: function(req, file, callback) {
@@ -21,7 +22,8 @@ module.exports = function(app) {
   // If the user has valid login credentials, send them to the members page.
   // Otherwise the user will be sent an error
   app.post("/api/login", passport.authenticate("local"), (req, res) => {
-    // Sending back a password, even a hashed password, isn't a good idea
+  
+      // Sending back a password, even a hashed password, isn't a good idea
     res.json({
       username: req.user.username,
       id: req.user.id
@@ -56,11 +58,15 @@ module.exports = function(app) {
       // The user is not logged in, send back an empty object
       return res.json({});
     }
-    // Otherwise send back the user's username and id
+    // Otherwise send back the user's username, id and avatar
     // Sending back a password, even a hashed password, isn't a good idea
+
+    console.log(req.user.avatar);
+
     res.json({
       username: req.user.username,
-      id: req.user.id
+      id: req.user.id,
+      avatar : req.user.avatar
     });
   });
 
@@ -96,8 +102,7 @@ module.exports = function(app) {
       res.redirect("/profile");
     });
   });
-
-  app.put("api/updateUser", (req, res) => {
+  app.put("/api/updateUser", (req, res) => {
     if (!req.user) {
       // The user is not logged in, send back an empty object
       return res.json({});

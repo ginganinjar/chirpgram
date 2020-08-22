@@ -2,7 +2,7 @@ $(document).ready(() => {
   // This file just does a GET request to figure out which user is logged in
   // and updates the HTML on the page
   $.get("/api/profile").then(data => {
-    $("#avatar").attr("src", "" + data.avatar);
+    $("#avatar").attr("src", "/public/uploads/" + data.avatar);
     $("#bio").val(data.bio);
     $("#location").val(data.location);
     $("#likes").val(data.likes);

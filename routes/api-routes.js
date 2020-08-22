@@ -11,7 +11,7 @@ const storage = multer.diskStorage({
     callback(null, "./uploads");
   },
   filename: function(req, file, callback) {
-    callback(null, Date.now() + path.extname(file.originalname));
+    callback(null, "userAvatar" + Date.now() + path.extname(file.originalname));
   }
 });
 const upload = multer({ storage: storage }).single("userAvatar");
@@ -54,30 +54,28 @@ module.exports = function(app) {
   app.get("/api/user_data", (req, res) => {
     if (!req.user) {
       // The user is not logged in, send back an empty object
-      res.json({});
-    } else {
-      // Otherwise send back the user's username and id
-      // Sending back a password, even a hashed password, isn't a good idea
-      res.json({
-        username: req.user.username,
-        id: req.user.id
-      });
+      return res.json({});
     }
+    // Otherwise send back the user's username and id
+    // Sending back a password, even a hashed password, isn't a good idea
+    res.json({
+      username: req.user.username,
+      id: req.user.id
+    });
   });
 
   app.get("/api/profile", (req, res) => {
     if (!req.user) {
       // The user is not logged in, send back an empty object
-      res.json({});
-    } else {
-      db.User.findOne({
-        where: {
-          id: req.user.id
-        }
-      }).then(data => {
-        res.json(data);
-      });
+      return res.json({});
     }
+    db.User.findOne({
+      where: {
+        id: req.user.id
+      }
+    }).then(data => {
+      res.json(data);
+    });
   });
 
   app.post("/api/avatar", (req, res) => {
@@ -87,7 +85,7 @@ module.exports = function(app) {
       }
       db.User.update(
         {
-          avatar: req.file.path
+          avatar: req.file.filename
         },
         {
           where: {
@@ -97,5 +95,26 @@ module.exports = function(app) {
       );
       res.redirect("/profile");
     });
+  });
+
+  app.put("api/updateUser", (req, res) => {
+    if (!req.user) {
+      // The user is not logged in, send back an empty object
+      return res.json({});
+    }
+    db.User.update(
+      {
+        location: req.body.location,
+        bio: req.body.bio,
+        likes: req.body.likes,
+        email: req.body.email,
+        phone: req.body.phone
+      },
+      {
+        where: {
+          id: req.user.id
+        }
+      }
+    );
   });
 };

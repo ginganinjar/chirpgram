@@ -127,14 +127,16 @@ $(() => {
   function processUsers(data) {
     $("#users").empty();
 
+  
+
     // cycle through users
     for (i = 0; i < data.length; i++) {
       $("#users").append(
-        '<li class="userList" data-id="' +
+        '<a href="#" ><img src="/uploads/' + data[i][2] + '"width="25px" height="25px"><li class="userList" data-id="' +
           data[i][1] +
           '">' +
           data[i][0] +
-          "</li>"
+          "</li></a>"
       );
     }
   }
@@ -319,13 +321,16 @@ $(() => {
     $.getJSON("api/user_data", (data) => {
       setPublicChatStatus();
       username = data.username;
+      avatar = data.avatar;
+
+     // console.log(avatar);
       $chatPage.show();
 
       $currentInput = $inputMessage.focus();
       // sending this user information over to the server to add to array
       userID = socket.id;
-      socket.emit("add user", username, userID);
-      socket.emit("update userlist", username, userID);
+      socket.emit("add user", username, userID, avatar);
+      socket.emit("update userlist", username, userID, avatar);
 
       connected = true;
     });
@@ -386,7 +391,7 @@ $(() => {
 
     if (username) {
       userID = socket.id;
-      socket.emit("add user", username, userID);
+      socket.emit("add user", username, userID, avatar);
     }
   });
 

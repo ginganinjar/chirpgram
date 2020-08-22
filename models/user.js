@@ -29,7 +29,7 @@ module.exports = function(sequelize, DataTypes) {
     },
     // storing bio
     bio: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       defaultValue: "Bio"
     },
     // store users likes

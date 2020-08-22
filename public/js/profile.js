@@ -30,4 +30,34 @@ $(document).ready(() => {
 
     return false;
   });
+
+  $("#updateUser").on("submit", event => {
+    event.preventDefault();
+
+    const userInfo = {
+      bio: $("#bio")
+        .val()
+        .trim(),
+      location: $("#location")
+        .val()
+        .trim(),
+      likes: $("#likes")
+        .val()
+        .trim(),
+      email: $("#email")
+        .val()
+        .trim(),
+      phone: $("#phone")
+        .val()
+        .trim()
+    };
+
+    $.ajax({
+      method: "PUT",
+      url: "/api/updateUser",
+      data: userInfo
+    }).then(() => {
+      window.location.href = "/profile";
+    });
+  });
 });

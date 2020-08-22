@@ -68,7 +68,7 @@ $(() => {
     // get the id of the sender and the username
     sendToUserID = $(e.currentTarget).data("id");
 
-    sendToUserName = $(e.currentTarget)[0].innerHTML;
+    sendToUserName = $(e.currentTarget)[0].text;
 
     $(".chatStatus").text("Sending private messages to : " + sendToUserName);
     $(".return").css("visibility", "visible");
@@ -155,13 +155,9 @@ $(() => {
     // cycle through users
     for (i = 0; i < data.length; i++) {
       $(".users").append(
-        '<a href="#" ><img src="/uploads/' +
-          data[i][2] +
-          '"width="25px" height="25px"><li class="userList" data-id="' +
-          data[i][1] +
-          '">' +
+        '<li><a href="#" class="userList" data-id="' + data[i][1] + '"><img src="/uploads/' + data[i][2] + '" width="25px" height="25px">' +
           data[i][0] +
-          "</li></a>"
+          " </a></li>"
       );
     }
   }

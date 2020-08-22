@@ -100,7 +100,7 @@ module.exports = function(io) {
         toid: data.toid,
         message: data.message,
         username: data.username,
-        usercolor: usercolor,
+        usercolor: data.usercolor,
       });
     });
   });

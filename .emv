@@ -1,5 +1,0 @@
-DB_USER=root
-DB_PWD=letmein1
-DB_NAME=chatapplication
-DB_HOST=localhost
-    

@@ -155,7 +155,7 @@ $(() => {
     // cycle through users
     for (i = 0; i < data.length; i++) {
       $(".users").append(
-        '<li><a href="#" class="userList" data-id="' + data[i][1] + '"><img src="/uploads/' + data[i][2] + '" width="25px" height="25px">' +
+        '<li><a href="#" class="userList" data-id="' + data[i][1] + '"><img src="/uploads/' + data[i][2] + '" width="50px" height="50px">' +
           data[i][0] +
           " </a></li>"
       );

@@ -23,7 +23,28 @@ $(() => {
   let sendToUserID = null;
   let sendToUserName = null;
 
-  let colorArray = ["#ffc107","007bff","#6610f2","#e83e8c","#dc3545","#fd7e14","#28a745","#20c997","#17a2b8","#fff","#6c757d","#343a40","#007bff","#6c757d","#28a745","17a2b8","#ffc107","#dc3545","#f8f9fa","#343a40"]
+  let colorArray = [
+    "#ffc107",
+    "007bff",
+    "#6610f2",
+    "#e83e8c",
+    "#dc3545",
+    "#fd7e14",
+    "#28a745",
+    "#20c997",
+    "#17a2b8",
+    "#fff",
+    "#6c757d",
+    "#343a40",
+    "#007bff",
+    "#6c757d",
+    "#28a745",
+    "17a2b8",
+    "#ffc107",
+    "#dc3545",
+    "#f8f9fa",
+    "#343a40",
+  ];
   const socket = io();
 
   const setPublicChatStatus = () => {
@@ -146,7 +167,12 @@ $(() => {
   }
 
   const addNotificationMessage = (data, typeOfAlert) => {
-    $("#popUpMessages").empty(); // clear notification
+
+    let popUpMessages = $("#popUpMessages");
+
+    if (popUpMessages[0].childElementCount > 2) {
+      popUpMessages[0].firstChild.remove();
+    }
 
     let yellowAlert = null;
     // workout request and provide appropriate alert type.
@@ -176,9 +202,9 @@ $(() => {
   // Adds the visual chat message to the message list
   const addChatMessage = (data, options) => {
     // Don't fade the message in if there is an 'X was typing'
-   
-   console.log(data);
-   
+
+    console.log(data);
+
     const $typingMessages = getTypingMessages(data);
     options = options || {};
     if ($typingMessages.length !== 0) {
@@ -286,19 +312,14 @@ $(() => {
 
   // Keyboard events
 
-    const resetColorScheme = () => {
-      
-      $(".username").each(function() {
-
-        // check if this userid is the same as the poster changing the color
-        if (this.id == socket.id) {
-          $($(this)).css("color", colorArray[usercolor]);
-        }
-      });
-
+  const resetColorScheme = () => {
+    $(".username").each(function() {
+      // check if this userid is the same as the poster changing the color
+      if (this.id == socket.id) {
+        $($(this)).css("color", colorArray[usercolor]);
+      }
+    });
   };
-
-
 
   $window.keydown((event) => {
     // Auto-focus the current input when a key is typed
@@ -319,11 +340,15 @@ $(() => {
       usercolor--;
     }
 
-    if (usercolor < 0) {usercolor = colorArray.length;}
-    if (usercolor > colorArray.length) {usercolor = 0;}
+    if (usercolor < 0) {
+      usercolor = colorArray.length;
+    }
+    if (usercolor > colorArray.length) {
+      usercolor = 0;
+    }
     // reset the display to present colors as the user wants.
     if (event.which == 40 || event.which == 38) {
-       resetColorScheme();
+      resetColorScheme();
     }
 
     if (event.which === 13) {
@@ -446,4 +471,3 @@ $(() => {
 
 // eslint-disable-next-line quotes
 $('[data-toggle="tooltip"]').tooltip();
-

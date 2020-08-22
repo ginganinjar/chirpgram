@@ -1,3 +1,5 @@
+const db = require("../models");
+
 module.exports = function(io) {
   let numUsers = 0;
   let onlineUsers = [];
@@ -7,6 +9,19 @@ module.exports = function(io) {
 
     socket.on("add user", (username, socketID, avatar) => {
       // we add the user to a globalvariable of online users.
+      // here we are going to itterate through each user. We will update the avatar on the fly
+      // note the users profile will update when another user enters the chat
+      // until then the profile pic will not change.
+
+      db.User.findAll().then((data) => {
+        for (i = 0; i < data.length; i++) {
+          for (x = i; x < onlineUsers.length; x++) {
+            if (data[i].username == onlineUsers[x][0]) {
+              onlineUsers[x][2] = data[i].avatar;
+            }
+          }
+        }
+      });
 
       if (username !== null && username !== "null") {
         onlineUsers.push([username, socketID, avatar]);
@@ -19,13 +34,14 @@ module.exports = function(io) {
       addedUser = true;
       socket.emit("login", {
         numUsers: onlineUsers.length,
-      }); 
+      });
       // echo globally (all clients) that a person has connected
 
       socket.broadcast.emit("user joined", {
         username: socket.username,
         numUsers: onlineUsers.length,
         socketAddress: socketID,
+        avatar: avatar
       });
 
       socket.broadcast.emit("user list", onlineUsers);
@@ -64,7 +80,9 @@ module.exports = function(io) {
         // remove user from array
         if (socket.username !== null && socket.username !== "null") {
           // reset online user array
-          onlineUsers = onlineUsers.filter(item => item[0] !== socket.username);
+          onlineUsers = onlineUsers.filter(
+            (item) => item[0] !== socket.username
+          );
         }
 
         socket.broadcast.emit("user list", onlineUsers);

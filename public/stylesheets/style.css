@@ -78,6 +78,9 @@ font-family: 'Julius Sans One', sans-serif;
 .popupMessages {
   color: cadetblue;
   font-family: 'Julius Sans One', sans-serif;
+  height: 200px;
+  max-height: 150px;
+  overflow: hidden;
 }
 
 .statusHeader {

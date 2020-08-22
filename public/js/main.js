@@ -30,7 +30,11 @@ $(() => {
     sendToUserName = null;
     $(".chatStatus").text("You are broadcasting to everyone!");
     $(".return").css("visibility", "hidden");
+<<<<<<< HEAD
+    addNotificationMessage("Everyone can see your messages","white");
+=======
     addNotificationMessage("Everyone can see your messages", "red");
+>>>>>>> c487469f45c3b42464bc1b81b85d19052fde5244
   };
 
   $(".return").on("click", () => {
@@ -55,7 +59,7 @@ $(() => {
     );
     // set the css of the sender to something idk what
 
-    $(e.currentTarget).css("color", "red");
+    $(e.currentTarget).css("color", "white");
 
     $(".message").each(function() {
       // if this message is not from the selected user, hide it
@@ -90,7 +94,6 @@ $(() => {
     addNotificationMessage(message);
   };
 
-  // Sends a chat message
   const sendMessage = () => {
   
     let message = " : " + $inputMessage.val();
@@ -146,12 +149,12 @@ $(() => {
     let yellowAlert = null;
   // workout request and provide appropriate alert type.
 
-    yellowAlert = "/img/zooloo.png";
-    if (typeOfAlert == null || typeOfAlert !== "red") {
-      yellowAlert = "/img/alarm.png";
+    yellowAlert = "/img/Broadcast.png";
+    if (typeOfAlert == null || typeOfAlert !== "white") {
+      yellowAlert;
     }
     if (typeOfAlert == "green") {
-      yellowAlert = "/img/green.png";
+      yellowAlert = "/img/Private.png";
     }
 
     if (data) {
@@ -185,7 +188,7 @@ $(() => {
 
     const $usernameDiv = $('<span class="username"/ id="' + data.userid + '">')
       .text(pretext + data.username)
-      .css("color", "red");
+      .css("color", "darkslateblue");
 
     const $messageBodyDiv = $('<span class="messageBody">')
       .text(data.message)
@@ -300,7 +303,7 @@ $(() => {
     updateTyping();
   });
 
-  // Click events
+  // Click event
 
   // Focus input when clicking anywhere on login page
   $loginPage.click(() => {
@@ -357,7 +360,7 @@ $(() => {
 
   // Whenever the server emits 'user left', log it in the chat body
   socket.on("user left", (data) => {
-    addNotificationMessage(data.username + " left", "red");
+    addNotificationMessage(data.username + " left", "white");
     addParticipantsMessage(data);
     removeChatTyping(data);
   });
@@ -373,7 +376,7 @@ $(() => {
   });
 
   socket.on("disconnect", () => {
-    addNotificationMessage("you have been disconnected", "red");
+    addNotificationMessage("you have been disconnected", "white");
   });
 
   socket.on("user list", (data) => {
@@ -392,7 +395,11 @@ $(() => {
   });
 
   socket.on("reconnect_error", () => {
-    addNotificationMessage("attempt to reconnect has failed", "red");
+    addNotificationMessage("attempt to reconnect has failed", "white");
     socket.emit("hi", "everyone");
   });
 });
+
+// $("#emoji").emojioneArea();
+
+// $(".inputMessage").emojioneArea();

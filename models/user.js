@@ -20,7 +20,7 @@ module.exports = function(sequelize, DataTypes) {
     // storing avatar file path
     avatar: {
       type: DataTypes.STRING,
-      defaultValue: "Avatar"
+      defaultValue: "placeholder.png"
     },
     // location
     location: {

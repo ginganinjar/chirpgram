@@ -12,6 +12,7 @@ $(() => {
   const $loginPage = $(".login.page"); // The login page
   const $chatPage = $(".chat.page"); // The chatroom page
   let username;
+  let usercolor = 8;
 
   let connected = false;
   let typing = false;
@@ -23,6 +24,28 @@ $(() => {
   let sendToUserID = null;
   let sendToUserName = null;
 
+  const colorArray = [
+    "#ffc107",
+    "007bff",
+    "#6610f2",
+    "#e83e8c",
+    "#dc3545",
+    "#fd7e14",
+    "#28a745",
+    "#20c997",
+    "#17a2b8",
+    "#fff",
+    "#6c757d",
+    "#343a40",
+    "#007bff",
+    "#6c757d",
+    "#28a745",
+    "17a2b8",
+    "#ffc107",
+    "#dc3545",
+    "#f8f9fa",
+    "#343a40"
+  ];
   const socket = io();
 
   const setPublicChatStatus = () => {
@@ -46,7 +69,7 @@ $(() => {
     // get the id of the sender and the username
     sendToUserID = $(e.currentTarget).data("id");
 
-    sendToUserName = $(e.currentTarget)[0].innerHTML;
+    sendToUserName = $(e.currentTarget)[0].text;
 
     $(".chatStatus").text("Sending private messages to : " + sendToUserName);
     $(".return").css("visibility", "visible");
@@ -103,7 +126,8 @@ $(() => {
       addChatMessage({
         userid: socket.id,
         username: username,
-        message: message
+        message: message,
+        usercolor: usercolor
       });
       // tell server to execute 'new message' and send along one parameter
 
@@ -111,14 +135,16 @@ $(() => {
         const sendThis = {
           toid: sendToUserID,
           message: message,
-          username: username
+          username: username,
+          usercolor: usercolor
         };
         socket.emit("getMsg", sendThis);
       } else {
         socket.emit("new message", {
           userid: socket.id,
           message: message,
-          username: username
+          username: username,
+          usercolor: usercolor
         });
       }
     }
@@ -131,18 +157,16 @@ $(() => {
     for (i = 0; i < data.length; i++) {
       $("#users").append(
         `<a href="#"><li class="userList" data-id="${data[i][1]}"><img src="/uploads/${data[i][2]}" alt="avatar" width="25px" height="25px"> ${data[i][0]}</li></a>`
-
-        // '<a href="#" ><img src="/uploads/' + data[i][2] + '"width="25px" height="25px"><li class="userList" data-id="' +
-        // data[i][1] +
-        // '">' +
-        // data[i][0] +
-        // "</li></a>"
       );
     }
   }
 
   const addNotificationMessage = (data, typeOfAlert) => {
-    $("#popUpMessages").empty(); // clear notification
+    const popUpMessages = $("#popUpMessages");
+
+    if (popUpMessages[0].childElementCount > 2) {
+      popUpMessages[0].firstChild.remove();
+    }
 
     let yellowAlert = null;
     // workout request and provide appropriate alert type.
@@ -172,6 +196,9 @@ $(() => {
   // Adds the visual chat message to the message list
   const addChatMessage = (data, options) => {
     // Don't fade the message in if there is an 'X was typing'
+
+    console.log(data);
+
     const $typingMessages = getTypingMessages(data);
     options = options || {};
     if ($typingMessages.length !== 0) {
@@ -186,7 +213,7 @@ $(() => {
 
     const $usernameDiv = $(`<span class="username" id="${data.userid}">`)
       .text(pretext + data.username)
-      .css("color", "darkslateblue");
+      .css("color", colorArray[data.usercolor]);
 
     // eslint-disable-next-line quotes
     const $messageBodyDiv = $(`<span class="messageBody">`)
@@ -279,16 +306,52 @@ $(() => {
   };
 
   // Keyboard events
+
+  const resetColorScheme = () => {
+    $(".username").each(function() {
+      // check if this userid is the same as the poster changing the color
+      if (this.id == socket.id) {
+        $($(this)).css("color", colorArray[usercolor]);
+      }
+    });
+  };
+
   $window.keydown(event => {
     // Auto-focus the current input when a key is typed
     if (!(event.ctrlKey || event.metaKey || event.altKey)) {
       $currentInput.focus();
     }
-    // When the client hits ENTER on their keyboard
+    // 38 is up - 40 is down.
+
+    // When the client hits up on their keyboard
+    if (event.which == 38) {
+      // add the current user color
+      usercolor++;
+    }
+
+    // When the client hits down on their keyboard
+    if (event.which == 40) {
+      // reduce the current user color
+      usercolor--;
+    }
+
+    if (usercolor < 0) {
+      usercolor = colorArray.length;
+    }
+    if (usercolor > colorArray.length) {
+      usercolor = 0;
+    }
+    // reset the display to present colors as the user wants.
+    if (event.which == 40 || event.which == 38) {
+      resetColorScheme();
+    }
 
     if (event.which === 13) {
       if (username) {
-        sendMessage();
+        // dont forward null
+        if ($inputMessage.val() !== "") {
+          sendMessage();
+        }
         socket.emit("stop typing");
         typing = false;
       } else {

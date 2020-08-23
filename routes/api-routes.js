@@ -105,6 +105,11 @@ module.exports = function(app) {
   });
 
   app.post("/api/avatar", (req, res) => {
+    // try {fileName = req.file.filename }
+    // catch {
+    //   return res.end("Error uploading file.");
+    // }
+
     upload(req, res, err => {
       if (err) {
         return res.end("Error uploading file.");
@@ -120,10 +125,18 @@ module.exports = function(app) {
             id: req.user.id
           }
         }
-      );
-      res.end();
+      ).then(() => {
+        res.json({
+          avatar: req.file.filename
+        });
+      });
     });
   });
+
+
+  
+     
+
   app.put("/api/updateUser", (req, res) => {
     if (!req.user) {
       // The user is not logged in, send back an empty object

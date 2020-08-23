@@ -4,21 +4,19 @@ const isAuthenticated = require("../config/middleware/isAuthenticated");
 module.exports = function(app) {
   app.get("/", (req, res) => {
     // If the user already has an account send them to the members page
-  
+
     if (!req) {
       return res.status(401).json({
-        status: 'error',
-        error: 'req body cannot be empty',
+        status: "error",
+        error: "req body cannot be empty"
       });
     }
-  
+
     if (req.user) {
       return res.render("chat");
     }
-    
+
     res.render("login");
-
-
   });
 
   app.get("/signup", (req, res) => {
@@ -28,7 +26,6 @@ module.exports = function(app) {
     }
     res.render("signup");
   });
-
 
   app.get("/login", (req, res) => {
     // If the user already has an account send them to the members page

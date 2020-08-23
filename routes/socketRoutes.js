@@ -4,9 +4,9 @@ module.exports = function(io) {
   let numUsers = 0;
   let onlineUsers = [];
   let addedUser = false;
-  let username = "undefined";
+  const username = "undefined";
 
-  io.on("connection", (socket) => {
+  io.on("connection", socket => {
     // when the client emits 'add user', this listens and executes
 
     socket.on("add user", (username, socketID, avatar) => {
@@ -48,21 +48,21 @@ module.exports = function(io) {
       // note the users profile will update when another user enters the chat
       // until then the profile pic will not change.
 
-      db.User.findAll().then((data) => {
+      db.User.findAll().then(data => {
         for (i = 0; i < data.length; i++) {
           for (x = i; x < onlineUsers.length; x++) {
+            // eslint-disable-next-line eqeqeq
             if (data[i].username == onlineUsers[x][0]) {
               onlineUsers[x][2] = data[i].avatar;
             }
           }
-
         }
         io.emit("user list", onlineUsers);
       });
     });
 
     // when the client emits 'typing', we broadcast it to others
-    socket.on("new message", (data) => {
+    socket.on("new message", data => {
       // new message recieved - broadcasting
       socket.broadcast.emit("public message", data);
     });
@@ -90,7 +90,7 @@ module.exports = function(io) {
         // echo globally that this client has left
         // if a connection has been lost and authorisation is null, the username is returned as undefined
         // don't report this.
-        if ( username !== "undefined") {
+        if (username !== "undefined") {
           socket.broadcast.emit("user left", {
             username: socket.username,
             numUsers: numUsers
@@ -98,7 +98,7 @@ module.exports = function(io) {
         }
       }
     });
-    socket.on("getMsg", (data) => {
+    socket.on("getMsg", data => {
       // recieved private message request - now broadcast to said user.
       socket.broadcast.to(data.toid).emit("recievedMessage", {
         toid: data.toid,

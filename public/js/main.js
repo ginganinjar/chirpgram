@@ -67,9 +67,18 @@ $(() => {
     // get the user id
     let getThisUser = $(e.currentTarget)[0].text;
     // ok now fetch the users profile
+    
     $.getJSON("api/otheruser/" + getThisUser, (data) => {
+
       console.log(data);
- 
+      $("#profileModalLabel2").html(data.username); 
+      $("#avatar2").attr("src", "/uploads/" + data.avatar);
+      $("#avatar2").attr("max-width", "150px");
+      $("#bio2").val(data.bio);
+      $("#likes2").val(data.likes);
+      $("#location2").val(data.location);
+      $("#email2").val(data.email);
+      $("#phone2").val(data.phone);
     });
   });
 
@@ -177,13 +186,14 @@ $(() => {
   })
 
   function processUsers(data) {
-    $(".users").empty();
+   
 
     $.getJSON("/api/getAvatars", (theUsers) => {
-      console.log(theUsers);
+      $(".users").empty();
+      
       for (i = 0; i < data.length; i++) {
         const result = theUsers.find(({ username }) => username === data[i][0]);
-        console.log(result.avatar);
+        
         $(".users").append(
           '<li><a href="#" class="userList" data-id="' +
             data[i][1] +
@@ -425,7 +435,7 @@ $inputMessage.keydown((event) => {
       username = data.username;
       avatar = data.avatar;
 
-      // console.log(avatar);
+      
       $chatPage.show();
 
       $currentInput = $inputMessage.focus();

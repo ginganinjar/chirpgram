@@ -18,7 +18,7 @@ module.exports = function(io) {
       ++numUsers;
       addedUser = true;
       socket.emit("login", {
-        numUsers: onlineUsers.length,
+        numUsers: onlineUsers.length
       });
       // echo globally (all clients) that a person has connected
 
@@ -26,7 +26,7 @@ module.exports = function(io) {
         username: socket.username,
         numUsers: onlineUsers.length,
         socketAddress: socketID,
-        avatar: avatar,
+        avatar: avatar
       });
 
       socket.broadcast.emit("user list", onlineUsers);
@@ -35,7 +35,7 @@ module.exports = function(io) {
     // when the client emits 'typing', we broadcast it to others
     socket.on("typing", () => {
       socket.broadcast.emit("typing", {
-        username: socket.username,
+        username: socket.username
       });
     });
 
@@ -54,7 +54,6 @@ module.exports = function(io) {
             }
           }
         }
-        console.log("Dumping updated online users array");
         io.emit("user list", onlineUsers);
       });
     });
@@ -68,7 +67,7 @@ module.exports = function(io) {
     // when the client emits 'stop typing', we broadcast it to others
     socket.on("stop typing", () => {
       socket.broadcast.emit("stop typing", {
-        username: socket.username,
+        username: socket.username
       });
     });
 
@@ -80,18 +79,20 @@ module.exports = function(io) {
         // remove user from array
         if (socket.username !== null && socket.username !== "null") {
           // reset online user array
-          onlineUsers = onlineUsers.filter(
-            (item) => item[0] !== socket.username
-          );
+          onlineUsers = onlineUsers.filter(item => item[0] !== socket.username);
         }
 
         socket.broadcast.emit("user list", onlineUsers);
 
         // echo globally that this client has left
-        socket.broadcast.emit("user left", {
-          username: socket.username,
-          numUsers: numUsers,
-        });
+        // if a connection has been lost and authorisation is null, the username is returned as undefined
+        // don't report this.
+        if (username !== toLowerCase("undefined")) {
+          socket.broadcast.emit("user left", {
+            username: socket.username,
+            numUsers: numUsers
+          });
+        }
       }
     });
     socket.on("getMsg", (data) => {
@@ -100,7 +101,7 @@ module.exports = function(io) {
         toid: data.toid,
         message: data.message,
         username: data.username,
-        usercolor: data.usercolor,
+        usercolor: data.usercolor
       });
     });
   });

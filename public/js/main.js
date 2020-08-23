@@ -1,13 +1,13 @@
-/* eslint-disable eqeqeq */
 $(() => {
   const FADE_TIME = 150; // ms
   const TYPING_TIMER_LENGTH = 400; // ms
 
   // Initialize variables
+  const $window = $(window);
   const $usernameInput = $(".member-name"); // Input for username
   const $messages = $(".messages"); // Messages area
   const $inputMessage = $(".inputMessage"); // Input message input box
-  const $updateBtn = $("#updateBtn");
+
   const $loginPage = $(".login.page"); // The login page
   const $chatPage = $(".chat.page"); // The chatroom page
   let username;
@@ -23,7 +23,7 @@ $(() => {
   let sendToUserID = null;
   let sendToUserName = null;
 
-  const colorArray = [
+  let colorArray = [
     "#ffc107",
     "007bff",
     "#6610f2",
@@ -63,11 +63,11 @@ $(() => {
 
   // display profile information for various user
 
-  $("#users").on("mouseover", ".userList", e => {
+  $("#users").on("mouseover", ".userList", (e) => {
     // get the user id
-    const getThisUser = $(e.currentTarget)[0].text;
+    let getThisUser = $(e.currentTarget)[0].text;
     // ok now fetch the users profile
-    $.getJSON("api/otheruser/" + getThisUser, data => {
+    $.getJSON("api/otheruser/" + getThisUser, (data) => {
       console.log(data);
     });
   });
@@ -165,10 +165,10 @@ $(() => {
 
     $.getJSON("/api/getAvatars", (theUsers) => {
       console.log(theUsers);
-      for (i = 0; i < data.length; i ++) {
-        const result = theUsers.find( ({ username }) => username === data[i][0] );
-         console.log(result.avatar);
-         $(".users").append(
+      for (i = 0; i < data.length; i++) {
+        const result = theUsers.find(({ username }) => username === data[i][0]);
+        console.log(result.avatar);
+        $(".users").append(
           '<li><a href="#" class="userList" data-id="' +
             data[i][1] +
             '"><img src="/uploads/' +
@@ -177,13 +177,14 @@ $(() => {
             data[i][0] +
             " </a></li>"
         );
-
       }
     });
   }
 
   const addNotificationMessage = (data, typeOfAlert) => {
-    if (popUpMessages.length > 0 && popUpMessages[0].childElementCount > 2) {
+    let popUpMessages = $("#popUpMessages");
+
+    if (popUpMessages[0].childElementCount > 2) {
       popUpMessages[0].firstChild.remove();
     }
 
@@ -202,14 +203,15 @@ $(() => {
       const thisNotification = $("<div>");
 
       if (typeOfAlert !== "none") {
-        thisNotification.text(data);
-      } else {
         thisNotification
           .text(data)
-          .css("background-image", `url(${yellowAlert})`)
+          .css(`background-image`, `url(${yellowAlert})`)
           .css("background-repeat", "no-repeat")
           .css("background-position", "220px 0")
-          .css("background-size", "contain");
+          .css("background-size", "contain")
+          .attr("src", "/img/alarm.png");
+      } else {
+        thisNotification.text(data);
       }
 
       $("#popUpMessages").append(thisNotification);
@@ -234,17 +236,16 @@ $(() => {
       pretext = " Private Msg from :";
     }
 
-    const $usernameDiv = $(`<span class="username" id="${data.userid}">`)
+    const $usernameDiv = $('<span class="username"/ id="' + data.userid + '">')
       .text(pretext + data.username)
       .css("color", colorArray[data.usercolor]);
 
-    // eslint-disable-next-line quotes
-    const $messageBodyDiv = $(`<span class="messageBody">`)
+    const $messageBodyDiv = $('<span class="messageBody">')
       .text(data.message)
       .css("font-style", "italic");
 
     const typingClass = data.typing ? "typing" : "";
-    const $messageDiv = $(`<li id="${data.userid}" class="message"/>`)
+    const $messageDiv = $('<li id="' + data.userid + '" class="message"/>')
       .data("username", data.username)
       .addClass(typingClass)
       .append($usernameDiv, $messageBodyDiv);
@@ -323,7 +324,7 @@ $(() => {
 
   // Gets the 'X is typing' messages of a user
   const getTypingMessages = (data) => {
-    return $(".typing.message").filter(function() {
+    return $(".typing.message").filter(function(i) {
       return $(this).data("username") === data.username;
     });
   };
@@ -339,6 +340,7 @@ $(() => {
     });
   };
 
+  $window.keydown((event) => {
     // Auto-focus the current input when a key is typed
     if (!(event.ctrlKey || event.metaKey || event.altKey)) {
       $currentInput.focus();
@@ -488,5 +490,3 @@ $(() => {
 
 // eslint-disable-next-line quotes
 $('[data-toggle="tooltip"]').tooltip();
-
-

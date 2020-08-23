@@ -67,9 +67,18 @@ $(() => {
     // get the user id
     let getThisUser = $(e.currentTarget)[0].text;
     // ok now fetch the users profile
+    
     $.getJSON("api/otheruser/" + getThisUser, (data) => {
+
       console.log(data);
- 
+      $("#profileModalLabel2").html(data.username); 
+      $("#avatar2").attr("src", "/uploads/" + data.avatar);
+      $("#avatar2").attr("max-width", "150px");
+      $("#bio2").val(data.bio);
+      $("#likes2").val(data.likes);
+      $("#location2").val(data.location);
+      $("#email2").val(data.email);
+      $("#phone2").val(data.phone);
     });
   });
 
@@ -181,15 +190,16 @@ $(() => {
 
     $.getJSON("/api/getAvatars", (theUsers) => {
       $(".users").empty();
+      
       for (i = 0; i < data.length; i++) {
         const result = theUsers.find(({ username }) => username === data[i][0]);
-        console.log(result.avatar);
+        
         $(".users").append(
           '<li><a href="#" class="userList" data-id="' +
             data[i][1] +
             '"><img src="/uploads/' +
             result.avatar +
-            '" width="50px" height="50px">' +
+            '" width="25px" height="25px" style="border-radius: 50px 50px 50px">' +
             data[i][0] +
             " </a></li>"
         );
@@ -425,7 +435,7 @@ $inputMessage.keydown((event) => {
       username = data.username;
       avatar = data.avatar;
 
-      // console.log(avatar);
+      
       $chatPage.show();
 
       $currentInput = $inputMessage.focus();

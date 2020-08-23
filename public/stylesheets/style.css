@@ -59,8 +59,10 @@ a {
 .sideMenu {
   margin-top: 60px;
   color: black;
-  height: 90vh;
+  height: 85vh;
   width: 200px;
+  overflow: hidden;
+  overflow-y: scroll;
 }
 
 .sideLink {
@@ -83,12 +85,15 @@ a {
 }
 
 .chat {
+  position: inherit;
+  bottom: 60px;
   text-align: left;
   display: flex;
   flex-direction: column-reverse;
   height: 65vh;
   overflow-y: scroll;
   padding-right: 20px;
+
 }
 
 /* Landing Messages */
@@ -127,6 +132,8 @@ font-family: 'Julius Sans One', sans-serif;
 .return {
   text-align: left;
   cursor: pointer;
+  position: absolute;
+  top: 15px;
 }
 
 

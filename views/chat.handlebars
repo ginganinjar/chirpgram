@@ -4,7 +4,7 @@
   <div class="flex-grid">
 
     <!-- Modal -->
-    <div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="profileModalLabel" aria-hidden="true">
+    <div class="modal fade" id="profileModal" aria-labelledby="profileModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
@@ -16,34 +16,37 @@
           <div class="modal-body">
 
             <img id="avatar" alt="avatar image" src="">
+               <input data-focus="true" type="text" id="likes" name="likes" class="form-control">
 
-            <form id="uploadForm" enctype="multipart/form-data" action="/api/avatar" method="post">
+            {{!-- <form id="uploadForm" enctype="multipart/form-data" action="/api/avatar" method="post">
               <div id="uploadBtn">
                 <input class="uploadBtn" type="submit" value="Upload Image" name="submit"><span id="status"></span>
                 <input type="file" name="userAvatar">
               </div>
-            </form>
+            </form> --}}
 
-            <form id="updateUser" action="/api/updateUser" method="put">
+            {{!-- <form id="updateUser" action="/api/updateUser" method="put"> --}}
 
-              <div class="form-group row">
+              {{!-- <div class="form-group row">
                 <label class="col-sm-2 col-form-label">About Me: </label>
                 <div class="col-sm-10">
-              
+              <textarea id="bio" name="bio" class="form-control" aria-label="With textarea" ></textarea>
                 </div>
-              </div>
+              </div> --}}
 
-    <textarea id="bio" name="bio" class="form-control" aria-label="With textarea" ></textarea>
+    
 
-
+{{!-- 
               <div class="form-group row">
                 <label class="col-sm-2 col-form-label">Likes: </label>
                 <div class="col-sm-10">
                   <input data-focus="true" type="text" id="likes" name="likes" class="form-control">
-                </div>
+                </div> --}}
+
+{{!-- 
               </div>
                  <div class="form-group row">
-                <label class="col-sm-2 col-form-label">Location: </label>
+                <label for="location" class="col-sm-2 col-form-label">Location: </label>
                 <div class="col-sm-10">
                    <input type="text" id="location" name="location" class="form-control">
                 </div>
@@ -59,10 +62,10 @@
                 <div class="col-sm-10">
                   <input type="text" id="phone" name="phone" class="form-control">
                 </div>
-              </div>
+              </div> --}}
 
               {{!-- <button type="submit" id="updateBtn">Update User</button> --}}
-            </form>
+            {{!-- </form> --}}
 
           </div>
           <div class="modal-footer">
@@ -118,4 +121,4 @@
   </div>
 </div>
 
-<input id="emoji" class="inputMessage" placeholder="Type here..." />
+<input class="inputMessage" placeholder="TYPE HERE... (USE UP/DOWN ARROW KEY TO CHANGE YOUR USERNAME COLOUR)" />

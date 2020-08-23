@@ -74,6 +74,8 @@ module.exports = function(io) {
 
     // when the user disconnects.. perform this
     socket.on("disconnect", () => {
+      const addedUser = null;
+
       if (addedUser) {
         --numUsers;
 

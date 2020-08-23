@@ -56,8 +56,6 @@ $(document).ready(() => {
       method: "PUT",
       url: "/api/updateUser",
       data: userInfo
-    }).then(() => {
-      window.location.href = "/profile";
     });
   });
 });

@@ -4,11 +4,10 @@ $(() => {
   const TYPING_TIMER_LENGTH = 400; // ms
 
   // Initialize variables
-  const $window = $(window);
   const $usernameInput = $(".member-name"); // Input for username
   const $messages = $(".messages"); // Messages area
   const $inputMessage = $(".inputMessage"); // Input message input box
-
+  const $updateBtn = $("#updateBtn");
   const $loginPage = $(".login.page"); // The login page
   const $chatPage = $(".chat.page"); // The chatroom page
   let username;
@@ -64,11 +63,11 @@ $(() => {
 
   // display profile information for various user
 
-  $("#users").on("mouseover", ".userList", (e) => {
+  $("#users").on("mouseover", ".userList", e => {
     // get the user id
-    let getThisUser = $(e.currentTarget)[0].text;
+    const getThisUser = $(e.currentTarget)[0].text;
     // ok now fetch the users profile
-    $.getJSON("api/otheruser/" + getThisUser, (data) => {
+    $.getJSON("api/otheruser/" + getThisUser, data => {
       console.log(data);
     });
   });
@@ -340,7 +339,6 @@ $(() => {
     });
   };
 
-  $inputMessage.keydown((event) => {
     // Auto-focus the current input when a key is typed
     if (!(event.ctrlKey || event.metaKey || event.altKey)) {
       $currentInput.focus();
@@ -491,6 +489,4 @@ $(() => {
 // eslint-disable-next-line quotes
 $('[data-toggle="tooltip"]').tooltip();
 
-// $("#profileModal").on('hidden.bs.modal', function () {
-//   $(document).off('focusin.modal');
-// })
+

@@ -1,5 +1,6 @@
 // Requiring necessary npm packages
 
+// eslint-disable-next-line no-unused-vars
 const dotenv = require("dotenv").config();
 
 const express = require("express");

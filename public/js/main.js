@@ -162,11 +162,10 @@ $(() => {
   }
 
   const addNotificationMessage = (data, typeOfAlert) => {
-    const popUpMessages = $("#popUpMessages");
     if (popUpMessages.length > 0 && popUpMessages[0].childElementCount > 2) {
       popUpMessages[0].firstChild.remove();
     }
-    
+
     let yellowAlert = null;
     // workout request and provide appropriate alert type.
 
@@ -465,12 +464,3 @@ $(() => {
 
 // eslint-disable-next-line quotes
 $('[data-toggle="tooltip"]').tooltip();
-
-// $("#profileModal").on("shown.bs.modal", () => {
- 
-//   console.log("test");
-// });
-
-$(document).on("focusin.modal", function(e) {
-  e.stopPropagation();
-});

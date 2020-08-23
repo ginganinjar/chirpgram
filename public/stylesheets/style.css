@@ -67,7 +67,6 @@ a {
 
 .sideLink {
   font-weight: bolder;
-  text-align: center;
   padding: 10px;
   cursor: pointer;
 }
@@ -171,8 +170,6 @@ li {
   font-size: large;
 }
 
-
-
 .userList:hover {
   text-decoration: none;
   color: floralwhite;
@@ -188,7 +185,6 @@ a:hover {
 
 ::-webkit-scrollbar-track
 {
-	box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
 	background-color: transparent;
 }
 

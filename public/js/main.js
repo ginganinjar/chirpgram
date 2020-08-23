@@ -177,10 +177,10 @@ $(() => {
   })
 
   function processUsers(data) {
-    $(".users").empty();
+   
 
     $.getJSON("/api/getAvatars", (theUsers) => {
-      console.log(theUsers);
+      $(".users").empty();
       for (i = 0; i < data.length; i++) {
         const result = theUsers.find(({ username }) => username === data[i][0]);
         console.log(result.avatar);

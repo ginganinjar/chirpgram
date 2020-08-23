@@ -55,7 +55,6 @@ module.exports = function(io) {
             }
           }
         }
-        console.log("Dumping updated online users array");
         io.emit("user list", onlineUsers);
       });
     });
@@ -87,10 +86,14 @@ module.exports = function(io) {
         socket.broadcast.emit("user list", onlineUsers);
 
         // echo globally that this client has left
-        socket.broadcast.emit("user left", {
-          username: socket.username,
-          numUsers: numUsers
-        });
+        // if a connection has been lost and authorisation is null, the username is returned as undefined
+        // don't report this.
+        if (username !== toLowerCase("undefined")) {
+          socket.broadcast.emit("user left", {
+            username: socket.username,
+            numUsers: numUsers
+          });
+        }
       }
     });
     socket.on("getMsg", data => {

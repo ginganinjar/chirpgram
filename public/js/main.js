@@ -164,18 +164,23 @@ $(() => {
   function processUsers(data) {
     $(".users").empty();
 
-    // cycle through users
-    for (i = 0; i < data.length; i++) {
-      $(".users").append(
-        '<li><a href="#" class="userList" data-id="' +
-          data[i][1] +
-          '"><img src="/uploads/' +
-          data[i][2] +
-          '" width="50px" height="50px">' +
-          data[i][0] +
-          " </a></li>"
-      );
-    }
+    $.getJSON("/api/getAvatars", (theUsers) => {
+      console.log(theUsers);
+      for (i = 0; i < data.length; i ++) {
+        const result = theUsers.find( ({ username }) => username === data[i][0] );
+         console.log(result.avatar);
+         $(".users").append(
+          '<li><a href="#" class="userList" data-id="' +
+            data[i][1] +
+            '"><img src="/uploads/' +
+            result.avatar +
+            '" width="50px" height="50px">' +
+            data[i][0] +
+            " </a></li>"
+        );
+
+      }
+    });
   }
 
   const addNotificationMessage = (data, typeOfAlert) => {

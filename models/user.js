@@ -42,7 +42,7 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING,
       defaultValue: "Email"
     },
-    // store phone number 
+    // store phone number
     phone: {
       type: DataTypes.STRING,
       defaultValue: "Phone"

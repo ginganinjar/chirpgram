@@ -1,3 +1,4 @@
+/* eslint-disable eqeqeq */
 $(() => {
   const FADE_TIME = 150; // ms
   const TYPING_TIMER_LENGTH = 400; // ms
@@ -23,7 +24,7 @@ $(() => {
   let sendToUserID = null;
   let sendToUserName = null;
 
-  let colorArray = [
+  const colorArray = [
     "#ffc107",
     "007bff",
     "#6610f2",
@@ -43,7 +44,7 @@ $(() => {
     "#ffc107",
     "#dc3545",
     "#f8f9fa",
-    "#343a40",
+    "#343a40"
   ];
   const socket = io();
 
@@ -61,8 +62,19 @@ $(() => {
     setPublicChatStatus();
   });
 
+  // display profile information for various user
+
+  $("#users").on("mouseover", ".userList", (e) => {
+    // get the user id
+    let getThisUser = $(e.currentTarget)[0].text;
+    // ok now fetch the users profile
+    $.getJSON("api/otheruser/" + getThisUser, (data) => {
+      console.log(data);
+    });
+  });
+
   // send private message to user when user element is selected.
-  $("#users").on("click", ".userList", (e) => {
+  $("#users").on("click", ".userList", e => {
     chattype = "private";
 
     // get the id of the sender and the username
@@ -89,11 +101,11 @@ $(() => {
   });
 
   // group chat public message recieved
-  socket.on("public message", (data) => {
+  socket.on("public message", data => {
     addChatMessage(data);
   });
 
-  socket.on("recievedMessage", (data) => {
+  socket.on("recievedMessage", data => {
     // recieved global message - post it
     theMSG = data.message;
     fromMSG = data.username;
@@ -103,7 +115,7 @@ $(() => {
 
   // Prompt for setting a username
 
-  const addParticipantsMessage = (data) => {
+  const addParticipantsMessage = data => {
     let message = "";
     if (data.numUsers === 1) {
       message += "there's 1 participant";
@@ -126,7 +138,7 @@ $(() => {
         userid: socket.id,
         username: username,
         message: message,
-        usercolor: usercolor,
+        usercolor: usercolor
       });
       // tell server to execute 'new message' and send along one parameter
 
@@ -135,7 +147,7 @@ $(() => {
           toid: sendToUserID,
           message: message,
           username: username,
-          usercolor: usercolor,
+          usercolor: usercolor
         };
         socket.emit("getMsg", sendThis);
       } else {
@@ -143,30 +155,25 @@ $(() => {
           userid: socket.id,
           message: message,
           username: username,
-          usercolor: usercolor,
+          usercolor: usercolor
         });
       }
     }
   };
 
   function processUsers(data) {
-    $(".users").empty();
+    $("#users").empty();
 
     // cycle through users
     for (i = 0; i < data.length; i++) {
-      $(".users").append(
-        '<li><a href="#" class="userList" data-id="' + data[i][1] + '"><img src="/uploads/' + data[i][2] + '" width="50px" height="50px">' +
-          data[i][0] +
-          " </a></li>"
+      $("#users").append(
+        `<a href="#"><li class="userList" data-id="${data[i][1]}"><img src="/uploads/${data[i][2]}" alt="avatar" width="25px" height="25px"> ${data[i][0]}</li></a>`
       );
     }
   }
 
   const addNotificationMessage = (data, typeOfAlert) => {
-
-    let popUpMessages = $("#popUpMessages");
-
-    if (popUpMessages[0].childElementCount > 2) {
+    if (popUpMessages.length > 0 && popUpMessages[0].childElementCount > 2) {
       popUpMessages[0].firstChild.remove();
     }
 
@@ -185,7 +192,7 @@ $(() => {
       const thisNotification = $("<div>");
       thisNotification
         .text(data)
-        .css(`background-image`, `url(${yellowAlert})`)
+        .css("background-image", `url(${yellowAlert})`)
         .css("background-repeat", "no-repeat")
         .css("background-position", "220px 0")
         .css("background-size", "contain")
@@ -213,16 +220,17 @@ $(() => {
       pretext = " Private Msg from :";
     }
 
-    const $usernameDiv = $('<span class="username"/ id="' + data.userid + '">')
+    const $usernameDiv = $(`<span class="username" id="${data.userid}">`)
       .text(pretext + data.username)
       .css("color", colorArray[data.usercolor]);
 
-    const $messageBodyDiv = $('<span class="messageBody">')
+    // eslint-disable-next-line quotes
+    const $messageBodyDiv = $(`<span class="messageBody">`)
       .text(data.message)
       .css("font-style", "italic");
 
     const typingClass = data.typing ? "typing" : "";
-    const $messageDiv = $('<li id="' + data.userid + '" class="message"/>')
+    const $messageDiv = $(`<li id="${data.userid}" class="message"/>`)
       .data("username", data.username)
       .addClass(typingClass)
       .append($usernameDiv, $messageBodyDiv);
@@ -231,14 +239,14 @@ $(() => {
   };
 
   // Adds the visual chat typing message
-  const addChatTyping = (data) => {
+  const addChatTyping = data => {
     data.typing = true;
     data.message = "is typing";
     addChatMessage(data);
   };
 
   // Removes the visual chat typing message
-  const removeChatTyping = (data) => {
+  const removeChatTyping = data => {
     getTypingMessages(data).fadeOut(function() {
       $(this).remove();
     });
@@ -273,7 +281,7 @@ $(() => {
   };
 
   // Prevents input from having injected markup
-  const cleanInput = (input) => {
+  const cleanInput = input => {
     return $("<div/>")
       .text(input)
       .html();
@@ -300,8 +308,8 @@ $(() => {
   };
 
   // Gets the 'X is typing' messages of a user
-  const getTypingMessages = (data) => {
-    return $(".typing.message").filter(function(i) {
+  const getTypingMessages = data => {
+    return $(".typing.message").filter(function() {
       return $(this).data("username") === data.username;
     });
   };
@@ -317,7 +325,11 @@ $(() => {
     });
   };
 
-  $window.keydown((event) => {
+<<<<<<< HEAD
+  $inputMessage.keydown((event) => {
+=======
+  $window.keydown(event => {
+>>>>>>> 496d3904a2a67b5c0bcba5f0e0ec39df838573d9
     // Auto-focus the current input when a key is typed
     if (!(event.ctrlKey || event.metaKey || event.altKey)) {
       $currentInput.focus();
@@ -382,7 +394,7 @@ $(() => {
 
   socket.on("connect", () => {
     // get the user details of the user
-    $.getJSON("api/user_data", (data) => {
+    $.getJSON("api/user_data", data => {
       setPublicChatStatus();
       username = data.username;
       avatar = data.avatar;
@@ -400,43 +412,43 @@ $(() => {
     });
   });
 
-  socket.on("login", (data) => {
+  socket.on("login", data => {
     connected = true;
     // get userlist
     socket.emit("update userlist", username, userID);
     // Display the welcome message
     const message = "Welcome to ChirpGram ";
     addParticipantsMessage(message, {
-      prepend: true,
+      prepend: true
     });
     addParticipantsMessage(data);
   });
 
   // Whenever the server emits 'new message', update the chat body
-  socket.on("new message", (data) => {
+  socket.on("new message", data => {
     addChatMessage(data);
   });
 
   // Whenever the server emits 'user joined', log it in the chat body
-  socket.on("user joined", (data) => {
+  socket.on("user joined", data => {
     addNotificationMessage(data.username + " joined");
     addParticipantsMessage(data);
   });
 
   // Whenever the server emits 'user left', log it in the chat body
-  socket.on("user left", (data) => {
+  socket.on("user left", data => {
     addNotificationMessage(data.username + " left", "white");
     addParticipantsMessage(data);
     removeChatTyping(data);
   });
 
   // Whenever the server emits 'typing', show the typing message
-  socket.on("typing", (data) => {
+  socket.on("typing", data => {
     addChatTyping(data);
   });
 
   // Whenever the server emits 'stop typing', kill the typing message
-  socket.on("stop typing", (data) => {
+  socket.on("stop typing", data => {
     removeChatTyping(data);
   });
 
@@ -444,7 +456,7 @@ $(() => {
     addNotificationMessage("you have been disconnected", "white");
   });
 
-  socket.on("user list", (data) => {
+  socket.on("user list", data => {
     // have recieved updated userlist - add it to the user panel
     processUsers(data);
   });
@@ -467,3 +479,7 @@ $(() => {
 
 // eslint-disable-next-line quotes
 $('[data-toggle="tooltip"]').tooltip();
+
+// $("#profileModal").on('hidden.bs.modal', function () {
+//   $(document).off('focusin.modal');
+// })

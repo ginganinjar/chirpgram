@@ -1,18 +1,10 @@
-const configData = 
-{
+const configData = {
   development: {
     username: process.env.DB_USER,
     password: process.env.DB_PWD,
     database: process.env.DB_NAME,
     host: process.env.DB_HOST,
     dialect: "mysql"
-  // username: "root",
-  //    password: "letmein1",
-  //    database: "chatapplicatiomn",
-  //    host: "localhost",
-  //    dialect: "mysql"
-
-
   },
   test: {
     username: "root",
@@ -22,9 +14,10 @@ const configData =
     dialect: "mysql"
   },
   production: {
+    // eslint-disable-next-line camelcase
     use_env_variable: "JAWSDB_URL",
     dialect: "mysql"
   }
-}
+};
 
 module.exports = configData;

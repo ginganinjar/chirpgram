@@ -198,7 +198,7 @@ $(() => {
             data[i][1] +
             '"><img src="/uploads/' +
             result.avatar +
-            '" width="25px" height="25px" style="border-radius: 50px 50px 50px>' +
+            '" width="25px" height="25px" style="border-radius: 50px 50px 50px">' +
             data[i][0] +
             " </a></li>"
         );

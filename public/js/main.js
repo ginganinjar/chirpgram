@@ -186,9 +186,10 @@ $(() => {
   })
 
   function processUsers(data) {
-    $(".users").empty();
+   
 
     $.getJSON("/api/getAvatars", (theUsers) => {
+      $(".users").empty();
       
       for (i = 0; i < data.length; i++) {
         const result = theUsers.find(({ username }) => username === data[i][0]);

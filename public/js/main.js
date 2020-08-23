@@ -122,7 +122,7 @@ $(() => {
     } else if (data.numUsers > 1) {
       message += "there are " + data.numUsers + " participants";
     }
-    addNotificationMessage(message);
+    addNotificationMessage(message, "none");
   };
 
   const sendMessage = () => {
@@ -162,12 +162,14 @@ $(() => {
   };
 
   function processUsers(data) {
-    $("#users").empty();
+    $(".users").empty();
 
     // cycle through users
     for (i = 0; i < data.length; i++) {
-      $("#users").append(
-        `<a href="#"><li class="userList" data-id="${data[i][1]}"><img src="/uploads/${data[i][2]}" alt="avatar" width="25px" height="25px"> ${data[i][0]}</li></a>`
+      $(".users").append(
+        '<li><a href="#" class="userList" data-id="' + data[i][1] + '"><img src="/uploads/' + data[i][2] + '" width="50px" height="50px">' +
+          data[i][0] +
+          " </a></li>"
       );
     }
   }
@@ -188,6 +190,10 @@ $(() => {
       yellowAlert = "/img/Private.png";
     }
 
+    if (typeOfAlert == "none") {
+      yellowAlert = "/img/none.png";
+    }
+
     if (data) {
       const thisNotification = $("<div>");
       thisNotification
@@ -196,7 +202,7 @@ $(() => {
         .css("background-repeat", "no-repeat")
         .css("background-position", "220px 0")
         .css("background-size", "contain")
-        .attr("src", "/img/alarm.png");
+ 
 
       $("#popUpMessages").append(thisNotification);
     }
@@ -325,7 +331,7 @@ $(() => {
     });
   };
 
-  $window.keydown(event => {
+  $inputMessage.keydown(event => {
     // Auto-focus the current input when a key is typed
     if (!(event.ctrlKey || event.metaKey || event.altKey)) {
       $currentInput.focus();

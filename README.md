@@ -2,7 +2,7 @@
 
   <p align="center">
   <a href="https://chirpgram.herokuapp.com" rel="noopener">
- <img width=600px height=600px src="./siteimg.jpeg" alt="Group Project 2 - Anon web chat logo"></a>
+ <img width=600px height=400px src="./siteimg.jpeg" alt="Group Project 2 - Anon web chat logo"></a>
 </p>
 
 

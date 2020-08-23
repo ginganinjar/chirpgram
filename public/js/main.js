@@ -69,7 +69,14 @@ $(() => {
     // ok now fetch the users profile
     $.getJSON("api/otheruser/" + getThisUser, (data) => {
       console.log(data);
+ 
     });
+  });
+
+  //display modal for user details
+  
+  $("#users").on("mouseover", "img", () => {
+        $("#userModal").modal("show");
   });
 
   // send private message to user when user element is selected.
@@ -348,7 +355,7 @@ $(() => {
     });
   };
 
-  $window.keydown((event) => {
+$inputMessage.keydown((event) => {
     // Auto-focus the current input when a key is typed
     if (!(event.ctrlKey || event.metaKey || event.altKey)) {
       $currentInput.focus();

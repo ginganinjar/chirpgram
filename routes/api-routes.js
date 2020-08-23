@@ -109,9 +109,7 @@ module.exports = function(app) {
       if (err) {
         return res.end("Error uploading file.");
       } else if (req.file == undefined) {
-        // console.log("tried to fire of a file name error");
-        // res.redirect("/members");
-        return res.end("There was no file");
+        console.log("there was an error");
       }
       db.User.update(
         {
@@ -123,7 +121,7 @@ module.exports = function(app) {
           }
         }
       );
-      res.redirect("/profile");
+      res.end();
     });
   });
   app.put("/api/updateUser", (req, res) => {

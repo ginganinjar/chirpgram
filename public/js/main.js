@@ -160,6 +160,15 @@ $(() => {
     }
   };
 
+  // when the user closes their profile page
+  // execute a broad callout to let all users know
+  // that this has happened and also to update the user
+  // profile
+  
+  $("#updateBtnClose").on("click", () => {
+    socket.emit("update userlist");
+  })
+
   function processUsers(data) {
     $(".users").empty();
 
@@ -221,8 +230,6 @@ $(() => {
   // Adds the visual chat message to the message list
   const addChatMessage = (data, options) => {
     // Don't fade the message in if there is an 'X was typing'
-
-    console.log(data);
 
     const $typingMessages = getTypingMessages(data);
     options = options || {};
@@ -330,6 +337,7 @@ $(() => {
   };
 
   // Keyboard events
+
 
   const resetColorScheme = () => {
     $(".username").each(function() {
@@ -442,8 +450,10 @@ $(() => {
 
   // Whenever the server emits 'user joined', log it in the chat body
   socket.on("user joined", (data) => {
+    if (data.username !== null) {
     addNotificationMessage(data.username + " joined");
     addParticipantsMessage(data);
+      }
   });
 
   // Whenever the server emits 'user left', log it in the chat body

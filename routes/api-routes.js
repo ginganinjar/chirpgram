@@ -97,7 +97,9 @@ module.exports = function(app) {
         "location",
         "bio",
         "likes",
-        "createdAt"
+        "createdAt",
+        "phone",
+        "email"
       ]
     }).then(data => {
       res.json(data);

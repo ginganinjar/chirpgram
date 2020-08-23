@@ -11,6 +11,7 @@ $(document).ready(() => {
   });
 
   $("#uploadForm").submit(function() {
+    event.preventDefault();
     $("#status")
       .empty()
       .text("File is uploading...");

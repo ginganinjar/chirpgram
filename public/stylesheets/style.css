@@ -17,7 +17,7 @@ body {
 }
 
 /* Welcome & Sign Out font */
-h2, a, html {
+h2, a, .sideLink {
   font-family: 'Julius Sans One', sans-serif;
 }
 
@@ -40,17 +40,32 @@ a {
   padding: 1rem;
 }
 
+/* sidebar */
+
 .sidebar {
   background:url(../img/MistBackground.jpg);
   flex: 1;
+  padding: 15px 0px 15px 0px;
 }
 
 .sideMenu {
+  margin-top: 60px;
   color: black;
   height: 90vh;
-  text-transform: uppercase;
-  padding: 60px 30px 0px 30px;
+  width: 200px;
 }
+
+.sideLink {
+  font-weight: bolder;
+  text-align: center;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.userList {
+  padding: 10px;
+}
+
 
 /* Chat Area */
 
@@ -133,22 +148,22 @@ font-family: 'Julius Sans One', sans-serif;
 
 /* Fix user-agent */
 
-
-ul {
-  list-style: none;
-  word-wrap: break-word;
-}
-
 li {
-  padding: 10px 5px 10px 5px;
   list-style:none;
   font-size: large;
 }
 
 .userList:hover {
-  color: white;
-  border: solid white;
+  text-decoration: none;
+  color: floralwhite;
+  border-left: solid white;
+  border-width: 5px;
   cursor: pointer;
+}
+
+a:hover {
+  text-decoration: none;
+  color: black;
 }
 
 ::-webkit-scrollbar-track
@@ -168,3 +183,67 @@ li {
 	background-color: #000000;
 	border: 2px solid #555555;
 }
+
+/* Profile modal */
+/* .modal-header {
+  display: block;
+  border: none;
+  text-align: center;
+}
+
+.modal-content {
+  border: none;
+  border-radius: 0px 16px 0px 16px;
+  color: floralwhite;
+  background:rgba(0, 0, 0, 0.7);
+  text-align: center;
+  font-family: 'Julius Sans One', sans-serif;
+}
+
+#avatar {
+  height: 100px;
+  width: 100px;
+  border-radius: 50px 50px 50px 50px;
+  border: none;
+  margin-bottom: 20px;
+}
+
+#uploadForm {
+  display: flex;
+  padding: 1em;
+  color: white;
+}
+
+#uploadBtn {
+  display: contents;
+}
+
+.uploadBtn:hover {
+  border: solid;
+  border-color: white;
+  background: none;
+  color: white;
+}
+
+.col-form-label {
+  text-align: right;
+  padding-right: 10px;
+}
+
+/* .form-control {
+  width: 100%;
+  border: none;
+  outline: none;
+  background-color: rgba(255, 255, 255, 0.4);
+  transition: 0.2s ease-out;
+} */
+
+.modal-footer {
+border: none;
+}
+
+.btn-light {
+  margin-right: 20px;
+  background: transparent;
+  color: floralwhite;
+} */

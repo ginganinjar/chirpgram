@@ -2,7 +2,7 @@ module.exports = function(io) {
   let numUsers = 0;
   let onlineUsers = [];
 
-  io.on("connection", (socket) => {
+  io.on("connection", socket => {
     // when the client emits 'add user', this listens and executes
 
     socket.on("add user", (username, socketID, avatar) => {
@@ -18,14 +18,14 @@ module.exports = function(io) {
       ++numUsers;
       addedUser = true;
       socket.emit("login", {
-        numUsers: onlineUsers.length,
+        numUsers: onlineUsers.length
       });
       // echo globally (all clients) that a person has connected
 
       socket.broadcast.emit("user joined", {
         username: socket.username,
         numUsers: onlineUsers.length,
-        socketAddress: socketID,
+        socketAddress: socketID
       });
 
       socket.broadcast.emit("user list", onlineUsers);
@@ -34,7 +34,7 @@ module.exports = function(io) {
     // when the client emits 'typing', we broadcast it to others
     socket.on("typing", () => {
       socket.broadcast.emit("typing", {
-        username: socket.username,
+        username: socket.username
       });
     });
 
@@ -44,7 +44,7 @@ module.exports = function(io) {
     });
 
     // when the client emits 'typing', we broadcast it to others
-    socket.on("new message", (data) => {
+    socket.on("new message", data => {
       // new message recieved - broadcasting
       socket.broadcast.emit("public message", data);
     });
@@ -52,7 +52,7 @@ module.exports = function(io) {
     // when the client emits 'stop typing', we broadcast it to others
     socket.on("stop typing", () => {
       socket.broadcast.emit("stop typing", {
-        username: socket.username,
+        username: socket.username
       });
     });
 
@@ -64,9 +64,7 @@ module.exports = function(io) {
         // remove user from array
         if (socket.username !== null && socket.username !== "null") {
           // reset online user array
-          onlineUsers = onlineUsers.filter(
-            (item) => item[0] !== socket.username
-          );
+          onlineUsers = onlineUsers.filter(item => item[0] !== socket.username);
         }
 
         socket.broadcast.emit("user list", onlineUsers);
@@ -74,16 +72,16 @@ module.exports = function(io) {
         // echo globally that this client has left
         socket.broadcast.emit("user left", {
           username: socket.username,
-          numUsers: numUsers,
+          numUsers: numUsers
         });
       }
     });
-    socket.on("getMsg", (data) => {
+    socket.on("getMsg", data => {
       // recieved private message request - now broadcast to said user.
       socket.broadcast.to(data.toid).emit("recievedMessage", {
         toid: data.toid,
         message: data.message,
-        username: data.username,
+        username: data.username
       });
     });
   });

@@ -11,6 +11,7 @@ $(document).ready(() => {
   });
 
   $("#uploadForm").submit(function() {
+    event.preventDefault();
     $("#status")
       .empty()
       .text("File is uploading...");
@@ -22,9 +23,10 @@ $(document).ready(() => {
 
       success: function(response) {
         console.log(response);
-        $("#status")
-          .empty()
-          .text(response);
+        if (response.avatar) {
+          $("#avatar").attr("src", "/uploads/" + response.avatar);
+          $("#status").empty();
+        }
       }
     });
 

@@ -201,7 +201,7 @@ a:hover {
 }
 
 /* Profile modal */
-/* .modal-header {
+.modal-header {
   display: block;
   border: none;
   text-align: center;
@@ -246,13 +246,13 @@ a:hover {
   padding-right: 10px;
 }
 
-/* .form-control {
+.form-control {
   width: 100%;
   border: none;
   outline: none;
   background-color: rgba(255, 255, 255, 0.4);
   transition: 0.2s ease-out;
-} */
+}
 
 .modal-footer {
 border: none;
@@ -262,4 +262,4 @@ border: none;
   margin-right: 20px;
   background: transparent;
   color: floralwhite;
-} */
+}

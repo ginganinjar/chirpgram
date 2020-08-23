@@ -464,3 +464,7 @@ $(() => {
 
 // eslint-disable-next-line quotes
 $('[data-toggle="tooltip"]').tooltip();
+
+// $("#profileModal").on('hidden.bs.modal', function () {
+//   $(document).off('focusin.modal');
+// })

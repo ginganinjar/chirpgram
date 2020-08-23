@@ -325,7 +325,11 @@ $(() => {
     });
   };
 
+<<<<<<< HEAD
+  $inputMessage.keydown((event) => {
+=======
   $window.keydown(event => {
+>>>>>>> 496d3904a2a67b5c0bcba5f0e0ec39df838573d9
     // Auto-focus the current input when a key is typed
     if (!(event.ctrlKey || event.metaKey || event.altKey)) {
       $currentInput.focus();

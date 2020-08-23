@@ -23,9 +23,10 @@ $(document).ready(() => {
 
       success: function(response) {
         console.log(response);
-        $("#status")
-          .empty()
-          .text(response);
+        if (response.avatar) {
+          $("#avatar").attr("src", "/uploads/" + response.avatar);
+          $("#status").empty();
+        }
       }
     });
 

@@ -61,6 +61,17 @@ $(() => {
     setPublicChatStatus();
   });
 
+  // display profile information for various user
+
+  $("#users").on("mouseover", ".userList", (e) => {
+    // get the user id
+    let getThisUser = $(e.currentTarget)[0].text;
+    // ok now fetch the users profile
+    $.getJSON("api/otheruser/" + getThisUser, (data) => {
+      console.log(data);
+    });
+  });
+
   // send private message to user when user element is selected.
   $("#users").on("click", ".userList", e => {
     chattype = "private";

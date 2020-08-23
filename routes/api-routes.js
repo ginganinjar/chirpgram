@@ -111,8 +111,8 @@ module.exports = function(app) {
       return res.json({});
     }
     db.User.findAll({
-      attributes: ["username", "avatar"],
-    }).then((data) => {
+      attributes: ["username", "avatar"]
+    }).then(data => {
       res.json(data);
     });
   });
@@ -128,27 +128,24 @@ module.exports = function(app) {
         return res.end("Error uploading file.");
       } else if (req.file == undefined) {
         console.log("there was an error");
-      }
-      db.User.update(
-        {
-          avatar: req.file.filename
-        },
-        {
-          where: {
-            id: req.user.id
+      } else {
+        db.User.update(
+          {
+            avatar: req.file.filename
+          },
+          {
+            where: {
+              id: req.user.id
+            }
           }
-        }
-      ).then(() => {
-        res.json({
-          avatar: req.file.filename
+        ).then(() => {
+          res.json({
+            avatar: req.file.filename
+          });
         });
-      });
+      }
     });
   });
-
-
-  
-     
 
   app.put("/api/updateUser", (req, res) => {
     if (!req.user) {

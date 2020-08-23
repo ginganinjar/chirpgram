@@ -1,6 +1,5 @@
 $(document).ready(() => {
-  // This file just does a GET request to figure out which user is logged in
-  // and updates the HTML on the page
+  // performs a get request when loading to gather all the data to populate the profile modal
   $.get("/api/profile").then(data => {
     $("#avatar").attr("src", "/uploads/" + data.avatar);
     $("#bio").val(data.bio);

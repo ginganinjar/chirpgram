@@ -13,7 +13,7 @@ const storage = multer.diskStorage({
   },
   filename: function(req, file, callback) {
     callback(null, "userAvatar" + Date.now() + path.extname(file.originalname));
-  },
+  }
 });
 const upload = multer({ storage: storage }).single("userAvatar");
 
@@ -25,7 +25,7 @@ module.exports = function(app) {
     // Sending back a password, even a hashed password, isn't a good idea
     res.json({
       username: req.user.username,
-      id: req.user.id,
+      id: req.user.id
     });
   });
 
@@ -35,12 +35,12 @@ module.exports = function(app) {
   app.post("/api/signup", (req, res) => {
     db.User.create({
       username: req.body.username,
-      password: req.body.password,
+      password: req.body.password
     })
       .then(() => {
         res.redirect(307, "/api/login");
       })
-      .catch((err) => {
+      .catch(err => {
         res.status(401).json(err);
       });
   });
@@ -63,7 +63,7 @@ module.exports = function(app) {
     res.json({
       username: req.user.username,
       id: req.user.id,
-      avatar: req.user.avatar,
+      avatar: req.user.avatar
     });
   });
 
@@ -74,9 +74,9 @@ module.exports = function(app) {
     }
     db.User.findOne({
       where: {
-        id: req.user.id,
-      },
-    }).then((data) => {
+        id: req.user.id
+      }
+    }).then(data => {
       res.json(data);
     });
   });
@@ -88,7 +88,7 @@ module.exports = function(app) {
     }
     db.User.findOne({
       where: {
-        username: req.params.name,
+        username: req.params.name
       },
 
       attributes: [
@@ -97,26 +97,30 @@ module.exports = function(app) {
         "location",
         "bio",
         "likes",
-        "createdAt",
-      ],
-    }).then((data) => {
+        "createdAt"
+      ]
+    }).then(data => {
       res.json(data);
     });
   });
 
   app.post("/api/avatar", (req, res) => {
-    upload(req, res, (err) => {
+    upload(req, res, err => {
       if (err) {
         return res.end("Error uploading file.");
+      } else if (req.file == undefined) {
+        // console.log("tried to fire of a file name error");
+        // res.redirect("/members");
+        return res.end("There was no file");
       }
       db.User.update(
         {
-          avatar: req.file.filename,
+          avatar: req.file.filename
         },
         {
           where: {
-            id: req.user.id,
-          },
+            id: req.user.id
+          }
         }
       );
       res.redirect("/profile");
@@ -133,12 +137,12 @@ module.exports = function(app) {
         bio: req.body.bio,
         likes: req.body.likes,
         email: req.body.email,
-        phone: req.body.phone,
+        phone: req.body.phone
       },
       {
         where: {
-          id: req.user.id,
-        },
+          id: req.user.id
+        }
       }
     );
   });

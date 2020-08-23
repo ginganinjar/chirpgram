@@ -1,3 +1,5 @@
+const db = require("../models");
+
 module.exports = function(io) {
   let numUsers = 0;
   let onlineUsers = [];
@@ -6,8 +8,6 @@ module.exports = function(io) {
     // when the client emits 'add user', this listens and executes
 
     socket.on("add user", (username, socketID, avatar) => {
-      // we add the user to a globalvariable of online users.
-
       if (username !== null && username !== "null") {
         onlineUsers.push([username, socketID, avatar]);
       }
@@ -26,6 +26,7 @@ module.exports = function(io) {
         username: socket.username,
         numUsers: onlineUsers.length,
         socketAddress: socketID,
+        avatar: avatar,
       });
 
       socket.broadcast.emit("user list", onlineUsers);
@@ -38,9 +39,24 @@ module.exports = function(io) {
       });
     });
 
+    // request from client for new user object
     socket.on("update userlist", () => {
-      // socket.broadcast.emit("user list", onlineUsers);
-      io.emit("user list", onlineUsers);
+      // we add the user to a globalvariable of online users.
+      // here we are going to itterate through each user. We will update the avatar on the fly
+      // note the users profile will update when another user enters the chat
+      // until then the profile pic will not change.
+
+      db.User.findAll().then((data) => {
+        for (i = 0; i < data.length; i++) {
+          for (x = i; x < onlineUsers.length; x++) {
+            if (data[i].username == onlineUsers[x][0]) {
+              onlineUsers[x][2] = data[i].avatar;
+            }
+          }
+        }
+        console.log("Dumping updated online users array");
+        io.emit("user list", onlineUsers);
+      });
     });
 
     // when the client emits 'typing', we broadcast it to others
@@ -84,6 +100,7 @@ module.exports = function(io) {
         toid: data.toid,
         message: data.message,
         username: data.username,
+        usercolor: data.usercolor,
       });
     });
   });

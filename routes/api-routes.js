@@ -118,17 +118,13 @@ module.exports = function(app) {
   });
 
   app.post("/api/avatar", (req, res) => {
-    // try {fileName = req.file.filename }
-    // catch {
-    //   return res.end("Error uploading file.");
-    // }
-
     upload(req, res, err => {
       if (err) {
         return res.end("Error uploading file.");
       } else if (req.file == undefined) {
         console.log("there was an error");
       } else {
+        console.log(path.extname(req.file.filename));
         db.User.update(
           {
             avatar: req.file.filename

@@ -104,6 +104,19 @@ module.exports = function(app) {
     });
   });
 
+  // send all avatars back to head office.
+  app.get("/api/getAvatars", (req, res) => {
+    if (!req.user) {
+      // The user is not logged in, send back an empty object
+      return res.json({});
+    }
+    db.User.findAll({
+      attributes: ["username", "avatar"],
+    }).then((data) => {
+      res.json(data);
+    });
+  });
+
   app.post("/api/avatar", (req, res) => {
     upload(req, res, (err) => {
       if (err) {

@@ -53,6 +53,7 @@ module.exports = function(io) {
               onlineUsers[x][2] = data[i].avatar;
             }
           }
+          
         }
         io.emit("user list", onlineUsers);
       });

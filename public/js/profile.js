@@ -24,7 +24,10 @@ $(document).ready(() => {
         console.log(response);
         if (response.avatar) {
           $("#avatar").attr("src", "/uploads/" + response.avatar);
-          $("#status").empty();
+        } else if (response.err) {
+          $("#status")
+            .empty()
+            .text(response.err);
         }
       }
     });

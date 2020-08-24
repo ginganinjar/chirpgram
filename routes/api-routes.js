@@ -135,12 +135,13 @@ module.exports = function(app) {
   app.post("/api/avatar", (req, res) => {
     upload(req, res, err => {
       if (err) {
-        return res.end("Error uploading file.");
+        res.json({ err: "Please upload only images" });
+        return res.end("Error uploading file");
         // eslint-disable-next-line eqeqeq
       } else if (req.file == undefined) {
-        console.log("there was an error");
+        res.json({ err: "Please select an image to upload" });
+        res.end();
       } else {
-        console.log(path.extname(req.file.filename));
         db.User.update(
           {
             avatar: req.file.filename

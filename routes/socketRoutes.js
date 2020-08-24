@@ -99,7 +99,6 @@ module.exports = function(io) {
       }
     });
 
-    
     socket.on("getMsg", data => {
       // recieved private message request - now broadcast to said user.
       socket.broadcast.to(data.toid).emit("recievedMessage", {

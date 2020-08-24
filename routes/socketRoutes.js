@@ -11,7 +11,13 @@ module.exports = function(io) {
 
     socket.on("add user", (username, socketID, avatar) => {
       if (username !== null && username !== "null") {
+         result = onlineUsers.find(element => element[1] === socket.io);
+         console.log("------"); 
+         console.log(result);
+         console.log("------");
+         if (result == undefined) {
         onlineUsers.push([username, socketID, avatar]);
+          }
       }
 
       // we store the username in the socket session for this client

@@ -10,21 +10,10 @@ module.exports = function(io) {
     // when the client emits 'add user', this listens and executes
 
     socket.on("add user", (username, socketID, avatar) => {
-    
-      // search to ensure that this socket.id is unique.
-      // if it is unique we have a new user.
-      // if not, then do not add it.
-
-    let found = null;
-      found = onlineUsers.find(function (element) { 
-        return element[1] == socket.id; 
-      }); 
-    
-    if (found === undefined) {
       if (username !== null && username !== "null") {
         onlineUsers.push([username, socketID, avatar]);
       }
-    }
+
       // we store the username in the socket session for this client
       socket.username = username;
       socket.id = socketID;

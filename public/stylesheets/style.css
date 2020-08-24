@@ -168,6 +168,7 @@ font-family: 'Julius Sans One', sans-serif;
 li {
   list-style:none;
   font-size: large;
+  padding-bottom: 5px;
 }
 
 .userList:hover {
@@ -216,7 +217,7 @@ a:hover {
   font-family: 'Julius Sans One', sans-serif;
 }
 
-#avatar {
+#avatar, #avatar2 {
   height: 100px;
   width: 100px;
   border-radius: 50px 50px 50px 50px;

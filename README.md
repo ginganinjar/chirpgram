@@ -83,7 +83,7 @@ NODE tracker.js
 npm run lint
 
 ## ✍️ Authors <a name = "contributing"></a>
-David S. Sujith Ranjitkumar & Ben Stephens
+David S. Sujith Ranjitkumar & Ben Stephens & based on work provided by socket.io : https://github.com/socketio/socket.io-client
 
 ## 🎉 Acknowledgements <a name = "acknowledgement"></a>
 The entire awesome team.

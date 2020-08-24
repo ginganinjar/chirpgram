@@ -3,7 +3,6 @@ $(() => {
   const TYPING_TIMER_LENGTH = 400; // ms
 
   // Initialize variables
-  const $window = $(window);
   const $usernameInput = $(".member-name"); // Input for username
   const $messages = $(".messages"); // Messages area
   const $inputMessage = $(".inputMessage"); // Input message input box
@@ -23,7 +22,7 @@ $(() => {
   let sendToUserID = null;
   let sendToUserName = null;
 
-  let colorArray = [
+  const colorArray = [
     "#ffc107",
     "007bff",
     "#6610f2",
@@ -43,7 +42,7 @@ $(() => {
     "#ffc107",
     "#dc3545",
     "#f8f9fa",
-    "#343a40",
+    "#343a40"
   ];
   const socket = io();
 
@@ -63,24 +62,29 @@ $(() => {
 
   // display profile information for various user
 
-  $("#users").on("mouseover", ".userList", (e) => {
+  $("#users").on("mouseover", ".userList", e => {
     // get the user id
-    let getThisUser = $(e.currentTarget)[0].text;
+    const getThisUser = $(e.currentTarget)[0].text;
     // ok now fetch the users profile
-    $.getJSON("api/otheruser/" + getThisUser, (data) => {
+    $.getJSON("api/otheruser/" + getThisUser, data => {
       console.log(data);
- 
+      $("#profileModalLabel2").html(data.username);
+      $("#avatar2").attr("src", "/uploads/" + data.avatar);
+      $("#bio2").val(data.bio);
+      $("#likes2").val(data.likes);
+      $("#location2").val(data.location);
+      $("#email2").val(data.email);
+      $("#phone2").val(data.phone);
     });
   });
 
   //display modal for user details
-  
   $("#users").on("mouseover", "img", () => {
-        $("#userModal").modal("show");
+    $("#userModal").modal("show");
   });
 
   // send private message to user when user element is selected.
-  $("#users").on("click", ".userList", (e) => {
+  $("#users").on("click", ".userList", e => {
     chattype = "private";
 
     // get the id of the sender and the username
@@ -94,9 +98,6 @@ $(() => {
       "Only " + sendToUserName + " can see your messages",
       "green"
     );
-    // set the css of the sender to something idk what
-
-    $(e.currentTarget).css("color", "white");
 
     $(".message").each(function() {
       // if this message is not from the selected user, hide it
@@ -107,11 +108,11 @@ $(() => {
   });
 
   // group chat public message recieved
-  socket.on("public message", (data) => {
+  socket.on("public message", data => {
     addChatMessage(data);
   });
 
-  socket.on("recievedMessage", (data) => {
+  socket.on("recievedMessage", data => {
     // recieved global message - post it
     theMSG = data.message;
     fromMSG = data.username;
@@ -121,7 +122,7 @@ $(() => {
 
   // Prompt for setting a username
 
-  const addParticipantsMessage = (data) => {
+  const addParticipantsMessage = data => {
     let message = "";
     if (data.numUsers === 1) {
       message += "there's 1 participant";
@@ -144,16 +145,17 @@ $(() => {
         userid: socket.id,
         username: username,
         message: message,
-        usercolor: usercolor,
+        usercolor: usercolor
       });
       // tell server to execute 'new message' and send along one parameter
 
+      // eslint-disable-next-line eqeqeq
       if (chattype == "private") {
         const sendThis = {
           toid: sendToUserID,
           message: message,
           username: username,
-          usercolor: usercolor,
+          usercolor: usercolor
         };
         socket.emit("getMsg", sendThis);
       } else {
@@ -161,7 +163,7 @@ $(() => {
           userid: socket.id,
           message: message,
           username: username,
-          usercolor: usercolor,
+          usercolor: usercolor
         });
       }
     }
@@ -171,25 +173,24 @@ $(() => {
   // execute a broad callout to let all users know
   // that this has happened and also to update the user
   // profile
-  
   $("#updateBtnClose").on("click", () => {
     socket.emit("update userlist");
-  })
+  });
 
   function processUsers(data) {
-   
-
-    $.getJSON("/api/getAvatars", (theUsers) => {
+    $.getJSON("/api/getAvatars", theUsers => {
       $(".users").empty();
       for (i = 0; i < data.length; i++) {
         const result = theUsers.find(({ username }) => username === data[i][0]);
-        console.log(result.avatar);
         $(".users").append(
+          // eslint-disable-next-line quotes
           '<li><a href="#" class="userList" data-id="' +
             data[i][1] +
+            // eslint-disable-next-line quotes
             '"><img src="/uploads/' +
             result.avatar +
-            '" width="50px" height="50px">' +
+            // eslint-disable-next-line quotes
+            '" width="25px" height="25px" style="border-radius: 50px 50px 50px">' +
             data[i][0] +
             " </a></li>"
         );
@@ -198,7 +199,7 @@ $(() => {
   }
 
   const addNotificationMessage = (data, typeOfAlert) => {
-    let popUpMessages = $("#popUpMessages");
+    const popUpMessages = $("#popUpMessages");
 
     if (popUpMessages[0].childElementCount > 2) {
       popUpMessages[0].firstChild.remove();
@@ -208,9 +209,11 @@ $(() => {
     // workout request and provide appropriate alert type.
 
     yellowAlert = "/img/Broadcast.png";
+    // eslint-disable-next-line eqeqeq
     if (typeOfAlert == null || typeOfAlert !== "white") {
       yellowAlert;
     }
+    // eslint-disable-next-line eqeqeq
     if (typeOfAlert == "green") {
       yellowAlert = "/img/Private.png";
     }
@@ -219,9 +222,9 @@ $(() => {
       const thisNotification = $("<div>");
 
       if (typeOfAlert !== "none") {
-        thisNotification
-          .text(data)
-          .css(`background-image`, `url(${yellowAlert})`)
+        thisNotification.text(data);
+        $(".chatStatus")
+          .css("background-image", `url(${yellowAlert})`)
           .css("background-repeat", "no-repeat")
           .css("background-position", "220px 0")
           .css("background-size", "contain")
@@ -229,7 +232,6 @@ $(() => {
       } else {
         thisNotification.text(data);
       }
-
       $("#popUpMessages").append(thisNotification);
     }
   };
@@ -246,19 +248,23 @@ $(() => {
     }
     let pretext = "";
 
+    // eslint-disable-next-line eqeqeq
     if (options == "private") {
       pretext = " Private Msg from :";
     }
 
+    // eslint-disable-next-line quotes
     const $usernameDiv = $('<span class="username"/ id="' + data.userid + '">')
       .text(pretext + data.username)
       .css("color", colorArray[data.usercolor]);
 
+    // eslint-disable-next-line quotes
     const $messageBodyDiv = $('<span class="messageBody">')
       .text(data.message)
       .css("font-style", "italic");
 
     const typingClass = data.typing ? "typing" : "";
+    // eslint-disable-next-line quotes
     const $messageDiv = $('<li id="' + data.userid + '" class="message"/>')
       .data("username", data.username)
       .addClass(typingClass)
@@ -268,14 +274,14 @@ $(() => {
   };
 
   // Adds the visual chat typing message
-  const addChatTyping = (data) => {
+  const addChatTyping = data => {
     data.typing = true;
     data.message = "is typing";
     addChatMessage(data);
   };
 
   // Removes the visual chat typing message
-  const removeChatTyping = (data) => {
+  const removeChatTyping = data => {
     getTypingMessages(data).fadeOut(function() {
       $(this).remove();
     });
@@ -310,7 +316,7 @@ $(() => {
   };
 
   // Prevents input from having injected markup
-  const cleanInput = (input) => {
+  const cleanInput = input => {
     return $("<div/>")
       .text(input)
       .html();
@@ -337,7 +343,8 @@ $(() => {
   };
 
   // Gets the 'X is typing' messages of a user
-  const getTypingMessages = (data) => {
+  const getTypingMessages = data => {
+    // eslint-disable-next-line no-unused-vars
     return $(".typing.message").filter(function(i) {
       return $(this).data("username") === data.username;
     });
@@ -345,17 +352,17 @@ $(() => {
 
   // Keyboard events
 
-
   const resetColorScheme = () => {
     $(".username").each(function() {
       // check if this userid is the same as the poster changing the color
+      // eslint-disable-next-line eqeqeq
       if (this.id == socket.id) {
         $($(this)).css("color", colorArray[usercolor]);
       }
     });
   };
 
-$inputMessage.keydown((event) => {
+  $inputMessage.keydown(event => {
     // Auto-focus the current input when a key is typed
     if (!(event.ctrlKey || event.metaKey || event.altKey)) {
       $currentInput.focus();
@@ -363,12 +370,14 @@ $inputMessage.keydown((event) => {
     // 38 is up - 40 is down.
 
     // When the client hits up on their keyboard
+    // eslint-disable-next-line eqeqeq
     if (event.which == 38) {
       // add the current user color
       usercolor++;
     }
 
     // When the client hits down on their keyboard
+    // eslint-disable-next-line eqeqeq
     if (event.which == 40) {
       // reduce the current user color
       usercolor--;
@@ -381,6 +390,7 @@ $inputMessage.keydown((event) => {
       usercolor = 0;
     }
     // reset the display to present colors as the user wants.
+    // eslint-disable-next-line eqeqeq
     if (event.which == 40 || event.which == 38) {
       resetColorScheme();
     }
@@ -420,12 +430,11 @@ $inputMessage.keydown((event) => {
 
   socket.on("connect", () => {
     // get the user details of the user
-    $.getJSON("api/user_data", (data) => {
+    $.getJSON("api/user_data", data => {
       setPublicChatStatus();
       username = data.username;
       avatar = data.avatar;
 
-      // console.log(avatar);
       $chatPage.show();
 
       $currentInput = $inputMessage.focus();
@@ -438,45 +447,45 @@ $inputMessage.keydown((event) => {
     });
   });
 
-  socket.on("login", (data) => {
+  socket.on("login", data => {
     connected = true;
     // get userlist
     socket.emit("update userlist", username, userID);
     // Display the welcome message
     const message = "Welcome to ChirpGram ";
     addParticipantsMessage(message, {
-      prepend: true,
+      prepend: true
     });
     addParticipantsMessage(data);
   });
 
   // Whenever the server emits 'new message', update the chat body
-  socket.on("new message", (data) => {
+  socket.on("new message", data => {
     addChatMessage(data);
   });
 
   // Whenever the server emits 'user joined', log it in the chat body
-  socket.on("user joined", (data) => {
+  socket.on("user joined", data => {
     if (data.username !== null) {
-    addNotificationMessage(data.username + " joined");
-    addParticipantsMessage(data);
-      }
+      addNotificationMessage(data.username + " joined");
+      addParticipantsMessage(data);
+    }
   });
 
   // Whenever the server emits 'user left', log it in the chat body
-  socket.on("user left", (data) => {
+  socket.on("user left", data => {
     addNotificationMessage(data.username + " left", "white");
     addParticipantsMessage(data);
     removeChatTyping(data);
   });
 
   // Whenever the server emits 'typing', show the typing message
-  socket.on("typing", (data) => {
+  socket.on("typing", data => {
     addChatTyping(data);
   });
 
   // Whenever the server emits 'stop typing', kill the typing message
-  socket.on("stop typing", (data) => {
+  socket.on("stop typing", data => {
     removeChatTyping(data);
   });
 
@@ -484,7 +493,7 @@ $inputMessage.keydown((event) => {
     addNotificationMessage("you have been disconnected", "white");
   });
 
-  socket.on("user list", (data) => {
+  socket.on("user list", data => {
     // have recieved updated userlist - add it to the user panel
     processUsers(data);
   });

@@ -5,6 +5,7 @@ const path = require("path");
 
 //code for file uploads using the middleware multer
 const multer = require("multer");
+// eslint-disable-next-line no-unused-vars
 const user = require("../models/user");
 
 const storage = multer.diskStorage({
@@ -123,6 +124,7 @@ module.exports = function(app) {
     upload(req, res, err => {
       if (err) {
         return res.end("Error uploading file.");
+        // eslint-disable-next-line eqeqeq
       } else if (req.file == undefined) {
         console.log("there was an error");
       } else {

@@ -3,6 +3,7 @@ $(document).ready(() => {
   const signUpForm = $("form.signup");
   const usernameInput = $("input#username-input");
   const passwordInput = $("input#password-input");
+  const $accessDenied = $("#accessDenied");
 
   // When the signup button is clicked, we validate the email and password are not blank
   signUpForm.on("submit", event => {
@@ -36,7 +37,14 @@ $(document).ready(() => {
   }
 
   function handleLoginErr(err) {
-    $("#alert .msg").text(err.responseJSON);
-    $("#alert").fadeIn(500);
+    console.log(err);
+    $accessDenied.removeAttr("hidden");
+    usernameInput.css("border-bottom", "3px solid crimson");
+    passwordInput.css("border-bottom", "3px solid crimson");
+    setTimeout(() => {
+      $accessDenied.attr("hidden", true);
+      usernameInput.css("border-bottom", "3px solid silver");
+      passwordInput.css("border-bottom", "3px solid silver");
+    }, 2500);
   }
 });

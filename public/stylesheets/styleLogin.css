@@ -16,16 +16,20 @@
   
   /* App Title */
   h1 {
-    margin-top: 175px;
+    margin-top: 145px;
     text-align: center;
     font-family: 'Montserrat Subrayada', sans-serif;
   }
+
+  #subTitle {
+    margin-bottom: 200px;
+  }
   
   p {
+    margin-bottom: 50px;
     text-align: right;
     font-size: large;
     font-weight: 500;
-    margin-bottom: 200px;
     font-family: 'Julius Sans One', sans-serif;
   }
   
@@ -75,7 +79,9 @@
   }
 
   #accessDenied {
+    text-align: center;
     display: grid;
+    z-index: 1;
     font-family: 'Julius Sans One', sans-serif;
     font-weight: bolder;
     color: floralwhite;

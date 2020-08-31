@@ -16,7 +16,19 @@ const storage = multer.diskStorage({
     callback(null, "userAvatar" + Date.now() + path.extname(file.originalname));
   }
 });
-const upload = multer({ storage: storage }).single("userAvatar");
+const upload = multer({
+  storage: storage,
+  fileFilter: function(req, file, callback) {
+    const ext = path.extname(file.originalname);
+    if (ext !== ".png" && ext !== ".jpg" && ext !== ".gif" && ext !== ".jpeg") {
+      return callback(new Error("Only images are allowed"));
+    }
+    callback(null, true);
+  },
+  limits: {
+    fileSize: 1024 * 1024
+  }
+}).single("userAvatar");
 
 module.exports = function(app) {
   // Using the passport.authenticate middleware with our local strategy.
@@ -121,17 +133,14 @@ module.exports = function(app) {
   });
 
   app.post("/api/avatar", (req, res) => {
-    // try {fileName = req.file.filename }
-    // catch {
-    //   return res.end("Error uploading file.");
-    // }
-
     upload(req, res, err => {
       if (err) {
-        return res.end("Error uploading file.");
+        res.json({ err: "Please upload only images" });
+        return res.end("Error uploading file");
         // eslint-disable-next-line eqeqeq
       } else if (req.file == undefined) {
-        console.log("there was an error");
+        res.json({ err: "Please select an image to upload" });
+        res.end();
       } else {
         db.User.update(
           {
